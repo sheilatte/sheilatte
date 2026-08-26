@@ -1,1871 +1,1302 @@
 /* =====================================
    SHEILATTE
-   script.js - FINAL VERSION
+   script.js
 ===================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+// =====================
+// Navbar Scroll
+// =====================
+const header = document.getElementById("header");
 
-    /* =====================================
-       PAGE DETECTION
-    ===================================== */
+window.addEventListener("scroll", () => {
+    if (!header) return;
 
-    const currentPath = window.location.pathname;
-
-    const isMenuPage =
-        currentPath.includes("/menu/") ||
-        currentPath.endsWith("/menu");
-
-
-
-    /* =====================================
-       NAVBAR
-    ===================================== */
-
-    const header = document.getElementById("header");
-    const menuBtn = document.querySelector(".menu-btn");
-    const navMenu = document.querySelector(".nav-menu");
+    header.classList.toggle(
+        "scrolled",
+        window.scrollY > 60
+    );
+});
 
 
-    // Navbar scroll effect
+// =====================
+// Mobile Menu
+// =====================
+const menuBtn = document.querySelector(".menu-btn");
+const navMenu = document.querySelector(".nav-menu");
 
-    if (header) {
+if (menuBtn && navMenu) {
 
-        window.addEventListener("scroll", () => {
+    menuBtn.addEventListener("click", () => {
 
-            header.classList.toggle(
-                "scrolled",
-                window.scrollY > 60
-            );
+        navMenu.classList.toggle("active");
 
-        });
+        menuBtn.innerHTML =
+            navMenu.classList.contains("active")
+                ? '<i class="fas fa-xmark"></i>'
+                : '<i class="fas fa-bars"></i>';
 
-    }
+    });
 
-
-    // Mobile menu
-
-    if (menuBtn && navMenu) {
-
-        menuBtn.addEventListener("click", () => {
-
-            navMenu.classList.toggle("active");
-
-            menuBtn.innerHTML =
-                navMenu.classList.contains("active")
-                    ? '<i class="fas fa-xmark"></i>'
-                    : '<i class="fas fa-bars"></i>';
-
-        });
+}
 
 
-        // Close mobile menu after clicking link
+document.querySelectorAll(".nav-menu a").forEach((link) => {
 
-        navMenu
-            .querySelectorAll("a")
-            .forEach((link) => {
+    link.addEventListener("click", () => {
 
-                link.addEventListener("click", () => {
-
-                    navMenu.classList.remove("active");
-
-                    menuBtn.innerHTML =
-                        '<i class="fas fa-bars"></i>';
-
-                });
-
-            });
-
-    }
-
-
-
-    /* =====================================
-       ACTIVE NAVBAR
-    ===================================== */
-
-    const sections =
-        document.querySelectorAll("section");
-
-    const navLinks =
-        document.querySelectorAll(".nav-menu a");
-
-
-    function updateActiveNavbar() {
-
-        /*
-         * HALAMAN MENU
-         *
-         * Menu selalu aktif.
-         */
-
-        if (isMenuPage) {
-
-            navLinks.forEach((link) => {
-
-                const href =
-                    link.getAttribute("href") || "";
-
-                const isMenuLink =
-                    href === "index.html" ||
-                    href === "./" ||
-                    href === "#menu";
-
-                link.classList.toggle(
-                    "active",
-                    isMenuLink
-                );
-
-            });
-
-            return;
+        if (navMenu) {
+            navMenu.classList.remove("active");
         }
 
+        if (menuBtn) {
+            menuBtn.innerHTML =
+                '<i class="fas fa-bars"></i>';
+        }
 
-        /*
-         * HALAMAN HOME
-         */
+    });
 
-        let currentSection = "";
+});
 
-        sections.forEach((section) => {
 
-            const sectionTop =
-                section.offsetTop - 150;
+// =====================
+// Active Navbar
+// =====================
+const sections =
+    document.querySelectorAll("section");
 
-            if (
-                window.scrollY >= sectionTop
-            ) {
+const navLinks =
+    document.querySelectorAll(".nav-menu a");
 
-                currentSection =
-                    section.getAttribute("id");
+window.addEventListener("scroll", () => {
 
-            }
+    let current = "";
 
-        });
+    sections.forEach((section) => {
 
-
-        navLinks.forEach((link) => {
-
-            const href =
-                link.getAttribute("href") || "";
-
-
-            /*
-             * Hanya link section Home
-             * yang menggunakan #.
-             */
-
-            if (href.startsWith("#")) {
-
-                link.classList.toggle(
-                    "active",
-                    href === `#${currentSection}`
-                );
-
-            } else {
-
-                /*
-                 * Link ke halaman Menu
-                 * jangan dianggap sebagai
-                 * active section di Home.
-                 */
-
-                link.classList.remove("active");
-
-            }
-
-        });
-
-    }
-
-
-    window.addEventListener(
-        "scroll",
-        updateActiveNavbar
-    );
-
-    updateActiveNavbar();
-
-
-
-    /* =====================================
-       SCROLL REVEAL
-    ===================================== */
-
-    let revealObserver = null;
-
-
-    if ("IntersectionObserver" in window) {
-
-        revealObserver =
-            new IntersectionObserver(
-                (entries) => {
-
-                    entries.forEach((entry) => {
-
-                        if (entry.isIntersecting) {
-
-                            entry.target.classList.add(
-                                "show"
-                            );
-
-                            revealObserver.unobserve(
-                                entry.target
-                            );
-
-                        }
-
-                    });
-
-                },
-                {
-                    threshold: 0.15
-                }
-            );
-
-    }
-
-
-    function observeReveal(elements) {
-
-        if (!elements) return;
-
-
-        elements.forEach((element) => {
-
-            element.classList.add("hidden");
-
-
-            if (revealObserver) {
-
-                revealObserver.observe(element);
-
-            } else {
-
-                /*
-                 * Fallback jika browser
-                 * tidak mendukung IntersectionObserver.
-                 */
-
-                element.classList.add("show");
-
-            }
-
-        });
-
-    }
-
-
-
-    /* =====================================
-       INITIAL REVEAL ELEMENTS
-    ===================================== */
-
-    observeReveal(
-        document.querySelectorAll(
-            ".hero-text, \
-             .hero-image, \
-             .about-image, \
-             .about-text, \
-             .promo-box, \
-             .contact-grid div"
-        )
-    );
-
-
-
-    /* =====================================
-       BACK TO TOP
-    ===================================== */
-
-    const topButton =
-        document.createElement("button");
-
-    topButton.innerHTML = "↑";
-
-    topButton.id = "topButton";
-
-    topButton.setAttribute(
-        "aria-label",
-        "Kembali ke atas"
-    );
-
-    document.body.appendChild(topButton);
-
-
-    window.addEventListener("scroll", () => {
-
-        topButton.classList.toggle(
-            "showTop",
-            window.scrollY > 500
-        );
+        if (
+            window.scrollY >=
+            section.offsetTop - 120
+        ) {
+            current =
+                section.getAttribute("id");
+        }
 
     });
 
 
-    topButton.addEventListener(
-        "click",
-        () => {
+    navLinks.forEach((link) => {
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
+        const href =
+            link.getAttribute("href") || "";
+
+        /*
+         * Hanya memproses link section
+         * yang berada di halaman yang sama.
+         *
+         * Contoh:
+         * #home
+         * #about
+         * #menu
+         *
+         * Link seperti:
+         * ../index.html#about
+         * tidak akan terganggu.
+         */
+
+        if (href.startsWith("#")) {
+
+            link.classList.toggle(
+                "active",
+                href === `#${current}`
+            );
+
+        }
+
+    });
+
+});
+
+
+// =====================
+// Scroll Reveal
+// =====================
+let observer = null;
+
+if ("IntersectionObserver" in window) {
+
+    observer = new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "show"
+                    );
+
+                    observer.unobserve(
+                        entry.target
+                    );
+
+                }
+
             });
 
+        },
+        {
+            threshold: 0.15
         }
     );
 
+}
 
 
-    /* =====================================
-       HERO PARALLAX
-    ===================================== */
+function observeReveal(elements) {
 
-    const heroImage =
-        document.querySelector(
-            ".hero-image img"
-        );
+    elements.forEach((element) => {
 
+        element.classList.add("hidden");
+
+        if (observer) {
+
+            observer.observe(element);
+
+        } else {
+
+            element.classList.add("show");
+
+        }
+
+    });
+
+}
+
+
+observeReveal(
+    document.querySelectorAll(
+        ".hero-text," +
+        ".hero-image," +
+        ".about-image," +
+        ".about-text," +
+        ".promo-box," +
+        ".contact-grid div"
+    )
+);
+
+
+// =====================
+// Back To Top Button
+// =====================
+const topButton =
+    document.createElement("button");
+
+topButton.innerHTML = "↑";
+
+topButton.id = "topButton";
+
+topButton.setAttribute(
+    "aria-label",
+    "Kembali ke atas"
+);
+
+document.body.appendChild(topButton);
+
+
+window.addEventListener("scroll", () => {
+
+    topButton.classList.toggle(
+        "showTop",
+        window.scrollY > 500
+    );
+
+});
+
+
+topButton.addEventListener(
+    "click",
+    () => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+);
+
+
+// =====================
+// Hero Parallax
+// =====================
+const heroImage =
+    document.querySelector(
+        ".hero-image img"
+    );
+
+
+window.addEventListener("scroll", () => {
 
     /*
-     * Hanya dijalankan jika
-     * hero image memang ada.
+     * Di menu/index.html elemen
+     * .hero-image tidak ada.
      *
-     * Ini penting karena halaman
-     * menu tidak memiliki hero-image.
+     * Karena itu kita cek terlebih dahulu
+     * agar tidak terjadi error.
      */
 
-    if (heroImage) {
+    if (!heroImage) return;
 
-        window.addEventListener(
-            "scroll",
-            () => {
+    heroImage.style.transform =
+        `translateY(${window.scrollY * 0.15}px)`;
 
-                heroImage.style.transform =
-                    `translateY(${window.scrollY * 0.15}px)`;
+});
 
-            }
-        );
 
-    }
+// =====================
+// Product Data & Menu
+// =====================
+const products = [
 
+    {
+        id: 1,
+        name: "Sheilatte Signature",
+        category: "Kopi",
+        price: "Rp32.000",
+        bestSeller: true,
 
+        image:
+            "assets/images/sheilatte.webp",
 
-    /* =====================================
-       PRODUCT DATA
-    ===================================== */
+        description:
+            "Espresso + Fresh Milk + Secret Cream",
 
-    const products = [
+        details:
+            "Racikan khas Sheilatte yang memadukan espresso pilihan, fresh milk, dan secret cream lembut untuk menghasilkan kopi susu yang creamy dan istimewa.",
 
-        /* =================================
-           BEST SELLER 1
-        ================================= */
+        ingredients: [
+            "Double Shot Espresso",
+            "Fresh Milk",
+            "Secret Cream Sheilatte"
+        ],
 
-        {
-            id: 1,
+        taste:
+            "Creamy dan lembut, rasa kopi seimbang dengan manis ringan, serta aftertaste milky yang nyaman.",
 
-            name: "Sheilatte Signature",
+        serving:
+            "Paling nikmat disajikan dingin untuk menemani waktu santai atau memulai hari."
+    },
 
-            category: "Kopi",
 
-            price: "Rp32.000",
+    {
+        id: 2,
+        name: "Caramel Latte",
+        category: "Kopi",
+        price: "Rp30.000",
+        bestSeller: true,
 
-            bestSeller: true,
+        image:
+            "assets/images/caramel.jpg",
 
-            image:
-                "assets/images/sheilatte.webp",
+        description:
+            "Latte dengan saus caramel premium",
 
-            description:
-                "Espresso + Fresh Milk + Secret Cream",
+        details:
+            "Perpaduan espresso, susu lembut, dan saus caramel premium yang menghadirkan rasa manis hangat dengan aroma kopi yang tetap terasa.",
 
-            details:
-                "Racikan khas Sheilatte yang memadukan espresso pilihan, fresh milk, dan secret cream lembut untuk menghasilkan kopi susu yang creamy dan istimewa.",
+        ingredients: [
+            "Double Shot Espresso",
+            "Fresh Milk",
+            "Saus Caramel Premium"
+        ],
 
-            ingredients: [
-                "Double Shot Espresso",
-                "Fresh Milk",
-                "Secret Cream Sheilatte"
-            ],
+        taste:
+            "Manis caramel yang lembut, tekstur creamy, dengan aroma kopi yang hangat.",
 
-            taste:
-                "Creamy dan lembut, rasa kopi seimbang dengan manis ringan, serta aftertaste milky yang nyaman.",
+        serving:
+            "Sajikan dingin atau hangat sebagai teman sore hari."
+    },
 
-            serving:
-                "Paling nikmat disajikan dingin untuk menemani waktu santai atau memulai hari."
-        },
 
+    {
+        id: 3,
+        name: "Americano",
+        category: "Kopi",
+        price: "Rp24.000",
+        bestSeller: true,
 
-        /* =================================
-           BEST SELLER 2
-        ================================= */
+        image:
+            "assets/images/americano.jpeg",
 
-        {
-            id: 2,
+        description:
+            "Espresso dengan cita rasa kuat",
 
-            name: "Caramel Latte",
+        details:
+            "Americano merupakan minuman kopi klasik yang dibuat dari espresso yang dipadukan dengan air panas. Minuman ini menghasilkan rasa kopi yang kuat, bersih, dan ringan untuk dinikmati kapan saja.",
 
-            category: "Kopi",
+        ingredients: [
+            "Double Shot Espresso",
+            "Air Panas",
+            "100% Arabica Coffee Beans"
+        ],
 
-            price: "Rp30.000",
+        taste:
+            "Aroma kopi kuat, sedikit pahit, sentuhan dark chocolate, dan aftertaste bersih.",
 
-            bestSeller: true,
+        serving:
+            "Nikmati tanpa gula saat pagi atau ketika membutuhkan fokus."
+    },
+
+
+    {
+        id: 4,
+        name: "Cappuccino",
+        category: "Kopi",
+        price: "Rp30.000",
+        bestSeller: true,
+
+        image:
+            "assets/images/cappuccino.jpg",
 
-            image:
-                "assets/images/caramel.jpg",
+        description:
+            "Espresso dengan steamed milk dan foam lembut",
+
+        details:
+            "Cappuccino klasik dengan keseimbangan espresso, steamed milk, dan foam susu lembut yang membuat setiap tegukan terasa hangat dan nyaman.",
+
+        ingredients: [
+            "Double Shot Espresso",
+            "Steamed Milk",
+            "Milk Foam"
+        ],
+
+        taste:
+            "Kopi terasa jelas dengan tekstur foam ringan dan creamy.",
+
+        serving:
+            "Sangat cocok disajikan hangat bersama pastry favorit."
+    },
+   
+   {
+    id: 5,
+    name: "Hazelnut Latte",
+    category: "Kopi",
+    price: "Rp32.000",
+    bestSeller: false,
+
+    image: "assets/images/hazelnut-latte.jpg",
 
-            description:
-                "Latte dengan saus caramel premium",
+    description:
+        "Latte creamy dengan aroma hazelnut",
+
+    details:
+        "Perpaduan espresso pilihan, fresh milk, dan hazelnut syrup yang menghasilkan rasa kopi creamy dengan aroma kacang hazelnut yang lembut.",
+
+    ingredients: [
+        "Double Shot Espresso",
+        "Fresh Milk",
+        "Hazelnut Syrup"
+    ],
+
+    taste:
+        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
+
+    serving:
+        "Nikmat disajikan dingin maupun hangat."
+},
 
-            details:
-                "Perpaduan espresso, susu lembut, dan saus caramel premium yang menghadirkan rasa manis hangat dengan aroma kopi yang tetap terasa.",
+{
+    id: 6,
+    name: "Vanilla Latte",
+    category: "Kopi",
+    price: "Rp31.000",
+    bestSeller: false,
+
+    image: "assets/images/vanilla-latte.jpg",
 
-            ingredients: [
-                "Double Shot Espresso",
-                "Fresh Milk",
-                "Saus Caramel Premium"
-            ],
+    description:
+        "Latte lembut dengan sentuhan vanilla",
+
+    details:
+        "Espresso dan fresh milk dipadukan dengan vanilla syrup untuk menciptakan minuman kopi yang lembut, creamy, dan harum.",
+
+    ingredients: [
+        "Double Shot Espresso",
+        "Fresh Milk",
+        "Vanilla Syrup"
+    ],
+
+    taste:
+        "Lembut, creamy, sedikit manis, dengan aroma vanilla yang harum.",
+
+    serving:
+        "Cocok dinikmati dingin untuk menemani aktivitas sehari-hari."
+},
 
-            taste:
-                "Manis caramel yang lembut, tekstur creamy, dengan aroma kopi yang hangat.",
+{
+    id: 7,
+    name: "Mocha Latte",
+    category: "Kopi",
+    price: "Rp32.000",
+    bestSeller: false,
+
+    image: "assets/images/mocha-latte.jpg",
 
-            serving:
-                "Sajikan dingin atau hangat sebagai teman sore hari."
-        },
+    description:
+        "Perpaduan kopi dan cokelat yang creamy",
+
+    details:
+        "Espresso, fresh milk, dan cokelat premium berpadu menghasilkan rasa kopi cokelat yang kaya namun tetap lembut.",
+
+    ingredients: [
+        "Double Shot Espresso",
+        "Fresh Milk",
+        "Chocolate Sauce"
+    ],
+
+    taste:
+        "Rasa kopi dan cokelat seimbang dengan tekstur creamy.",
+
+    serving:
+        "Nikmat disajikan dingin dengan tambahan whipped cream."
+},
 
+{
+    id: 8,
+    name: "Matcha Latte",
+    category: "Non-Kopi",
+    price: "Rp30.000",
+    bestSeller: false,
+
+    image: "assets/images/matcha-latte.jpg",
 
-        /* =================================
-           BEST SELLER 3
-        ================================= */
+    description:
+        "Matcha premium dengan fresh milk",
+
+    details:
+        "Matcha pilihan yang dipadukan dengan fresh milk menghasilkan minuman creamy dengan karakter rasa matcha yang khas.",
+
+    ingredients: [
+        "Premium Matcha",
+        "Fresh Milk",
+        "Simple Syrup"
+    ],
+
+    taste:
+        "Creamy, sedikit earthy, dengan rasa matcha yang lembut.",
+
+    serving:
+        "Paling nikmat disajikan dingin."
+},
 
-        {
-            id: 3,
+{
+    id: 9,
+    name: "Chocolate Latte",
+    category: "Non-Kopi",
+    price: "Rp29.000",
+    bestSeller: false,
+
+    image: "assets/images/chocolate-latte.jpg",
 
-            name: "Americano",
+    description:
+        "Cokelat creamy dengan fresh milk",
+
+    details:
+        "Minuman cokelat dengan perpaduan chocolate sauce dan fresh milk yang menghasilkan rasa manis dan creamy.",
+
+    ingredients: [
+        "Premium Chocolate",
+        "Fresh Milk",
+        "Chocolate Sauce"
+    ],
+
+    taste:
+        "Cokelat terasa kaya, manis, creamy, dan nyaman diminum.",
+
+    serving:
+        "Cocok disajikan dingin maupun hangat."
+},
 
-            category: "Kopi",
+{
+    id: 10,
+    name: "Taro Latte",
+    category: "Non-Kopi",
+    price: "Rp29.000",
+    bestSeller: false,
+
+    image: "assets/images/taro-latte.jpg",
 
-            price: "Rp24.000",
+    description:
+        "Taro creamy dengan rasa manis lembut",
+
+    details:
+        "Taro powder yang creamy dipadukan dengan fresh milk untuk menghasilkan minuman dengan aroma dan rasa taro yang khas.",
+
+    ingredients: [
+        "Premium Taro Powder",
+        "Fresh Milk",
+        "Simple Syrup"
+    ],
+
+    taste:
+        "Manis lembut, creamy, dengan aroma taro yang khas.",
+
+    serving:
+        "Nikmat disajikan dingin dengan es."
+},
 
-            bestSeller: true,
+{
+    id: 11,
+    name: "Lemon Tea",
+    category: "Tea",
+    price: "Rp22.000",
+    bestSeller: false,
+
+    image: "assets/images/lemon-tea.jpg",
 
-            image:
-                "assets/images/americano.jpeg",
+    description:
+        "Teh segar dengan perasan lemon",
+
+    details:
+        "Teh pilihan dengan perpaduan lemon segar yang memberikan rasa ringan dan menyegarkan.",
+
+    ingredients: [
+        "Premium Tea",
+        "Fresh Lemon",
+        "Simple Syrup"
+    ],
+
+    taste:
+        "Segar, sedikit asam, manis ringan, dengan aroma lemon.",
+
+    serving:
+        "Sangat cocok disajikan dingin dengan es."
+},
 
-            description:
-                "Espresso dengan cita rasa kuat",
+{
+    id: 12,
+    name: "Lychee Tea",
+    category: "Tea",
+    price: "Rp24.000",
+    bestSeller: false,
+
+    image: "assets/images/lychee-tea.jpg",
 
-            details:
-                "Americano merupakan minuman kopi klasik yang dibuat dari espresso yang dipadukan dengan air panas. Minuman ini menghasilkan rasa kopi yang kuat, bersih, dan ringan untuk dinikmati kapan saja.",
+    description:
+        "Teh segar dengan aroma buah lychee",
+
+    details:
+        "Teh pilihan yang dipadukan dengan rasa lychee untuk menghasilkan minuman yang ringan, fruity, dan menyegarkan.",
+
+    ingredients: [
+        "Premium Tea",
+        "Lychee Syrup",
+        "Lychee Fruit"
+    ],
+
+    taste:
+        "Manis, fruity, ringan, dengan aroma lychee yang segar.",
+
+    serving:
+        "Paling nikmat disajikan dingin."
+},
+
+{
+    id: 13,
+    name: "Peach Tea",
+    category: "Tea",
+    price: "Rp24.000",
+    bestSeller: false,
+
+    image: "assets/images/peach-tea.jpg",
+
+    description:
+        "Teh dengan rasa peach yang menyegarkan",
+
+    details:
+        "Teh pilihan dengan perpaduan peach yang memberikan rasa fruity dan aroma buah yang menyegarkan.",
+
+    ingredients: [
+        "Premium Tea",
+        "Peach Syrup",
+        "Fresh Peach"
+    ],
+
+    taste:
+        "Manis ringan, fruity, dan menyegarkan.",
+
+    serving:
+        "Disajikan dingin dengan es agar lebih segar."
+},
+
+{
+    id: 14,
+    name: "Butter Croissant",
+    category: "Snack",
+    price: "Rp20.000",
+    bestSeller: false,
+
+    image: "assets/images/butter-croissant.jpg",
+
+    description:
+        "Croissant renyah dengan aroma butter",
 
-            ingredients: [
-                "Double Shot Espresso",
-                "Air Panas",
-                "100% Arabica Coffee Beans"
-            ],
+    details:
+        "Croissant dengan tekstur luar yang renyah dan bagian dalam yang lembut dengan aroma butter yang khas.",
+
+    ingredients: [
+        "Premium Flour",
+        "Butter",
+        "Milk"
+    ],
 
-            taste:
-                "Aroma kopi kuat, sedikit pahit, sentuhan dark chocolate, dan aftertaste bersih.",
+    taste:
+        "Gurih, buttery, renyah di luar dan lembut di dalam.",
+
+    serving:
+        "Sangat cocok sebagai teman kopi di pagi atau sore hari."
+},
 
-            serving:
-                "Nikmati tanpa gula saat pagi atau ketika membutuhkan fokus."
-        },
+{
+    id: 15,
+    name: "Chocolate Donut",
+    category: "Snack",
+    price: "Rp18.000",
+    bestSeller: false,
+
+    image: "assets/images/chocolate-donut.jpg",
+
+    description:
+        "Donat lembut dengan topping cokelat",
 
+    details:
+        "Donat lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
 
-        /* =================================
-           BEST SELLER 4
-        ================================= */
+    ingredients: [
+        "Premium Flour",
+        "Milk",
+        "Chocolate"
+    ],
 
-        {
-            id: 4,
+    taste:
+        "Lembut, manis, dengan rasa cokelat yang kaya.",
 
-            name: "Cappuccino",
+    serving:
+        "Cocok dinikmati bersama Latte atau Cappuccino."
+}
+    taste:
+        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
 
-            category: "Kopi",
+    serving:
+        "Nikmat disajikan dingin maupun hangat."
+}
+   
+];
 
-            price: "Rp30.000",
 
-            bestSeller: true,
+// =====================
+// Product Page Detection
+// =====================
 
-            image:
-                "assets/images/cappuccino.jpg",
+/*
+ * index.html:
+ *
+ * <script src="js/script.js"></script>
+ *
+ * menu/index.html:
+ *
+ * <script src="../js/script.js"></script>
+ *
+ * Kita gunakan lokasi script untuk menentukan
+ * apakah gambar perlu menggunakan "../".
+ */
 
-            description:
-                "Espresso dengan steamed milk dan foam lembut",
+const isMenuPage =
+    !!document.querySelector(
+        'script[src="../js/script.js"]'
+    );
 
-            details:
-                "Cappuccino klasik dengan keseimbangan espresso, steamed milk, dan foam susu lembut yang membuat setiap tegukan terasa hangat dan nyaman.",
 
-            ingredients: [
-                "Double Shot Espresso",
-                "Steamed Milk",
-                "Milk Foam"
-            ],
+const assetPrefix =
+    isMenuPage ? "../" : "";
 
-            taste:
-                "Kopi terasa jelas dengan tekstur foam ringan dan creamy.",
 
-            serving:
-                "Sangat cocok disajikan hangat bersama pastry favorit."
-        },
+// =====================
+// Product Elements
+// =====================
+const productGrid =
+    document.getElementById(
+        "productGrid"
+    );
 
 
-        /* =================================
-           MENU 5
-        ================================= */
+const filterButtons =
+    document.querySelectorAll(
+        ".filter-btn"
+    );
 
-        {
-            id: 5,
 
-            name: "Hazelnut Latte",
+let activeFilter = "Semua";
 
-            category: "Kopi",
 
-            price: "Rp32.000",
+// =====================
+// Product Card
+// =====================
+function productCardTemplate(
+    product,
+    index
+) {
 
-            bestSeller: false,
+    return `
 
-            image:
-                "assets/images/hazelnut-latte.jpg",
+        <article
+            class="card product-card"
+            style="animation-delay:${index * 45}ms"
+        >
 
-            description:
-                "Latte creamy dengan aroma hazelnut",
+            <div class="product-image-wrap">
 
-            details:
-                "Perpaduan espresso pilihan, fresh milk, dan hazelnut syrup yang menghasilkan rasa kopi creamy dengan aroma kacang hazelnut yang lembut.",
+                <img
+                    src="${assetPrefix}${product.image}"
+                    alt="${product.name}"
 
-            ingredients: [
-                "Double Shot Espresso",
-                "Fresh Milk",
-                "Hazelnut Syrup"
-            ],
+                    onerror="
+                        this.onerror=null;
+                        this.src='${assetPrefix}assets/images/sheilatte.webp';
+                    "
+                >
 
-            taste:
-                "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
+            </div>
 
-            serving:
-                "Nikmat disajikan dingin maupun hangat."
-        },
 
+            <span class="category-badge">
+                ${product.category}
+            </span>
 
-        /* =================================
-           MENU 6
-        ================================= */
 
-        {
-            id: 6,
+            <h3>
+                ${product.name}
+            </h3>
 
-            name: "Vanilla Latte",
 
-            category: "Kopi",
+            <p>
+                ${product.description}
+            </p>
 
-            price: "Rp31.000",
 
-            bestSeller: false,
+            <span class="price">
+                ${product.price}
+            </span>
 
-            image:
-                "assets/images/vanilla-latte.jpg",
 
-            description:
-                "Latte lembut dengan sentuhan vanilla",
-
-            details:
-                "Espresso dan fresh milk dipadukan dengan vanilla syrup untuk menciptakan minuman kopi yang lembut, creamy, dan harum.",
-
-            ingredients: [
-                "Double Shot Espresso",
-                "Fresh Milk",
-                "Vanilla Syrup"
-            ],
-
-            taste:
-                "Lembut, creamy, sedikit manis, dengan aroma vanilla yang harum.",
-
-            serving:
-                "Cocok dinikmati dingin untuk menemani aktivitas sehari-hari."
-        },
-
-
-        /* =================================
-           MENU 7
-        ================================= */
-
-        {
-            id: 7,
-
-            name: "Mocha Latte",
-
-            category: "Kopi",
-
-            price: "Rp32.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/mocha-latte.jpg",
-
-            description:
-                "Perpaduan kopi dan cokelat yang creamy",
-
-            details:
-                "Espresso, fresh milk, dan cokelat premium berpadu menghasilkan rasa kopi cokelat yang kaya namun tetap lembut.",
-
-            ingredients: [
-                "Double Shot Espresso",
-                "Fresh Milk",
-                "Chocolate Sauce"
-            ],
-
-            taste:
-                "Rasa kopi dan cokelat seimbang dengan tekstur creamy.",
-
-            serving:
-                "Nikmat disajikan dingin dengan tambahan whipped cream."
-        },
-
-
-        /* =================================
-           MENU 8
-        ================================= */
-
-        {
-            id: 8,
-
-            name: "Matcha Latte",
-
-            category: "Non-Kopi",
-
-            price: "Rp30.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/matcha-latte.jpg",
-
-            description:
-                "Matcha premium dengan fresh milk",
-
-            details:
-                "Matcha pilihan yang dipadukan dengan fresh milk menghasilkan minuman creamy dengan karakter rasa matcha yang khas.",
-
-            ingredients: [
-                "Premium Matcha",
-                "Fresh Milk",
-                "Simple Syrup"
-            ],
-
-            taste:
-                "Creamy, sedikit earthy, dengan rasa matcha yang lembut.",
-
-            serving:
-                "Paling nikmat disajikan dingin."
-        },
-
-
-        /* =================================
-           MENU 9
-        ================================= */
-
-        {
-            id: 9,
-
-            name: "Chocolate Latte",
-
-            category: "Non-Kopi",
-
-            price: "Rp29.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/chocolate-latte.jpg",
-
-            description:
-                "Cokelat creamy dengan fresh milk",
-
-            details:
-                "Minuman cokelat dengan perpaduan chocolate sauce dan fresh milk yang menghasilkan rasa manis dan creamy.",
-
-            ingredients: [
-                "Premium Chocolate",
-                "Fresh Milk",
-                "Chocolate Sauce"
-            ],
-
-            taste:
-                "Cokelat terasa kaya, manis, creamy, dan nyaman diminum.",
-
-            serving:
-                "Cocok disajikan dingin maupun hangat."
-        },
-
-
-        /* =================================
-           MENU 10
-        ================================= */
-
-        {
-            id: 10,
-
-            name: "Taro Latte",
-
-            category: "Non-Kopi",
-
-            price: "Rp29.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/taro-latte.jpg",
-
-            description:
-                "Taro creamy dengan rasa manis lembut",
-
-            details:
-                "Taro powder yang creamy dipadukan dengan fresh milk untuk menghasilkan minuman dengan aroma dan rasa taro yang khas.",
-
-            ingredients: [
-                "Premium Taro Powder",
-                "Fresh Milk",
-                "Simple Syrup"
-            ],
-
-            taste:
-                "Manis lembut, creamy, dengan aroma taro yang khas.",
-
-            serving:
-                "Nikmat disajikan dingin dengan es."
-        },
-
-
-        /* =================================
-           MENU 11
-        ================================= */
-
-        {
-            id: 11,
-
-            name: "Lemon Tea",
-
-            category: "Tea",
-
-            price: "Rp22.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/lemon-tea.jpg",
-
-            description:
-                "Teh segar dengan perasan lemon",
-
-            details:
-                "Teh pilihan dengan perpaduan lemon segar yang memberikan rasa ringan dan menyegarkan.",
-
-            ingredients: [
-                "Premium Tea",
-                "Fresh Lemon",
-                "Simple Syrup"
-            ],
-
-            taste:
-                "Segar, sedikit asam, manis ringan, dengan aroma lemon.",
-
-            serving:
-                "Sangat cocok disajikan dingin dengan es."
-        },
-
-
-        /* =================================
-           MENU 12
-        ================================= */
-
-        {
-            id: 12,
-
-            name: "Lychee Tea",
-
-            category: "Tea",
-
-            price: "Rp24.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/lychee-tea.jpg",
-
-            description:
-                "Teh segar dengan aroma buah lychee",
-
-            details:
-                "Teh pilihan yang dipadukan dengan rasa lychee untuk menghasilkan minuman yang ringan, fruity, dan menyegarkan.",
-
-            ingredients: [
-                "Premium Tea",
-                "Lychee Syrup",
-                "Lychee Fruit"
-            ],
-
-            taste:
-                "Manis, fruity, ringan, dengan aroma lychee yang segar.",
-
-            serving:
-                "Paling nikmat disajikan dingin."
-        },
-
-
-        /* =================================
-           MENU 13
-        ================================= */
-
-        {
-            id: 13,
-
-            name: "Peach Tea",
-
-            category: "Tea",
-
-            price: "Rp24.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/peach-tea.jpg",
-
-            description:
-                "Teh dengan rasa peach yang menyegarkan",
-
-            details:
-                "Teh pilihan dengan perpaduan peach yang memberikan rasa fruity dan aroma buah yang menyegarkan.",
-
-            ingredients: [
-                "Premium Tea",
-                "Peach Syrup",
-                "Fresh Peach"
-            ],
-
-            taste:
-                "Manis ringan, fruity, dan menyegarkan.",
-
-            serving:
-                "Disajikan dingin dengan es agar lebih segar."
-        },
-
-
-        /* =================================
-           MENU 14
-        ================================= */
-
-        {
-            id: 14,
-
-            name: "Butter Croissant",
-
-            category: "Snack",
-
-            price: "Rp20.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/butter-croissant.jpg",
-
-            description:
-                "Croissant renyah dengan aroma butter",
-
-            details:
-                "Croissant dengan tekstur luar yang renyah dan bagian dalam yang lembut dengan aroma butter yang khas.",
-
-            ingredients: [
-                "Premium Flour",
-                "Butter",
-                "Milk"
-            ],
-
-            taste:
-                "Gurih, buttery, renyah di luar dan lembut di dalam.",
-
-            serving:
-                "Sangat cocok sebagai teman kopi di pagi atau sore hari."
-        },
-
-
-        /* =================================
-           MENU 15
-        ================================= */
-
-        {
-            id: 15,
-
-            name: "Chocolate Donut",
-
-            category: "Snack",
-
-            price: "Rp18.000",
-
-            bestSeller: false,
-
-            image:
-                "assets/images/chocolate-donut.jpg",
-
-            description:
-                "Donat lembut dengan topping cokelat",
-
-            details:
-                "Donat lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
-
-            ingredients: [
-                "Premium Flour",
-                "Milk",
-                "Chocolate"
-            ],
-
-            taste:
-                "Lembut, manis, dengan rasa cokelat yang kaya.",
-
-            serving:
-                "Cocok dinikmati bersama Latte atau Cappuccino."
-        }
-
-    ];
-
-
-
-    /* =====================================
-       PRODUCT GRID
-    ===================================== */
-
-    const productGrid =
-        document.getElementById(
-            "productGrid"
-        );
-
-
-    const filterButtons =
-        document.querySelectorAll(
-            ".filter-btn"
-        );
-
-
-    let activeFilter = "Semua";
-
-
-
-    /* =====================================
-       IMAGE PATH HELPER
-    ===================================== */
-
-    function getImagePath(image) {
-
-        if (!image) {
-
-            return isMenuPage
-                ? "../assets/images/sheilatte.webp"
-                : "assets/images/sheilatte.webp";
-
-        }
-
-
-        /*
-         * Data produk selalu menggunakan
-         *
-         * assets/images/nama-file
-         *
-         * Untuk menu/index.html perlu ../
-         */
-
-        return isMenuPage
-            ? `../${image}`
-            : image;
-
-    }
-
-
-
-    /* =====================================
-       FALLBACK IMAGE
-    ===================================== */
-
-    function getFallbackImage() {
-
-        return isMenuPage
-            ? "../assets/images/sheilatte.webp"
-            : "assets/images/sheilatte.webp";
-
-    }
-
-
-
-    /* =====================================
-       DETAIL LIST
-    ===================================== */
-
-    function detailList(items) {
-
-        if (!Array.isArray(items)) {
-
-            return "";
-
-        }
-
-
-        return `
-            <ul>
-                ${items
-                    .map(
-                        (item) =>
-                            `<li>${item}</li>`
-                    )
-                    .join("")
-                }
-            </ul>
-        `;
-
-    }
-
-
-
-    /* =====================================
-       PRODUCT CARD TEMPLATE
-    ===================================== */
-
-    function productCardTemplate(
-        product,
-        index
-    ) {
-
-        const imagePath =
-            getImagePath(product.image);
-
-        const fallbackImage =
-            getFallbackImage();
-
-
-        return `
-
-            <article
-                class="card product-card"
-                style="animation-delay:${index * 45}ms"
+            <button
+                class="detail-btn"
+                type="button"
+                aria-expanded="false"
             >
+                Lihat Detail
+            </button>
 
 
-                <!-- PRODUCT IMAGE -->
+            <div class="detail-content">
 
-                <div class="product-image-wrap">
+                <h4>
+                    Tentang ${product.name}
+                </h4>
 
-                    <img
-                        src="${imagePath}"
-                        alt="${product.name}"
-                        loading="lazy"
-                        onerror="
-                            this.onerror=null;
-                            this.src='${fallbackImage}';
-                        "
-                    >
-
-                </div>
-
-
-                <!-- CATEGORY -->
-
-                <span class="category-badge">
-
-                    ${product.category}
-
-                </span>
-
-
-                <!-- NAME -->
-
-                <h3>
-
-                    ${product.name}
-
-                </h3>
-
-
-                <!-- DESCRIPTION -->
 
                 <p>
-
-                    ${product.description}
-
+                    ${product.details}
                 </p>
 
 
-                <!-- PRICE -->
-
-                <span class="price">
-
-                    ${product.price}
-
-                </span>
+                <h4>
+                    Komposisi
+                </h4>
 
 
-                <!-- DETAIL BUTTON -->
+                ${detailList(
+                    product.ingredients
+                )}
+
+
+                <h4>
+                    Karakter Rasa
+                </h4>
+
+
+                <p>
+                    ${product.taste}
+                </p>
+
+
+                <h4>
+                    Rekomendasi Penyajian
+                </h4>
+
+
+                <p>
+                    ${product.serving}
+                </p>
+
 
                 <button
-                    class="detail-btn"
+                    class="detail-btn close-detail-btn"
                     type="button"
-                    aria-expanded="false"
                 >
-
-                    Lihat Detail
-
+                    Tutup Detail
                 </button>
 
+            </div>
 
-                <!-- DETAIL -->
+        </article>
 
-                <div class="detail-content">
+    `;
 
-
-                    <h4>
-
-                        Tentang
-                        ${product.name}
-
-                    </h4>
+}
 
 
-                    <p>
+// =====================
+// Render Products
+// =====================
+function renderProducts(category = activeFilter) {
 
-                        ${product.details}
+    if (!productGrid) return;
 
-                    </p>
-
-
-                    <h4>
-
-                        Komposisi
-
-                    </h4>
+    activeFilter = category;
 
 
-                    ${detailList(
-                        product.ingredients
-                    )}
+    // =========================================
+    // CEK HALAMAN
+    // =========================================
+
+    const isMenuPage =
+        window.location.pathname.includes("/menu/");
 
 
-                    <h4>
+    // =========================================
+    // TENTUKAN PRODUK YANG AKAN DITAMPILKAN
+    // =========================================
 
-                        Karakter Rasa
-
-                    </h4>
-
-
-                    <p>
-
-                        ${product.taste}
-
-                    </p>
+    let visibleProducts;
 
 
-                    <h4>
-
-                        Rekomendasi Penyajian
-
-                    </h4>
-
-
-                    <p>
-
-                        ${product.serving}
-
-                    </p>
-
-
-                    <button
-                        class="detail-btn close-detail-btn"
-                        type="button"
-                    >
-
-                        Tutup Detail
-
-                    </button>
-
-
-                </div>
-
-
-            </article>
-
-        `;
-
-    }
-
-
-
-    /* =====================================
-       RENDER PRODUCTS
-    ===================================== */
-
-    function renderProducts(
-        category = activeFilter
-    ) {
+    if (isMenuPage) {
 
         /*
-         * Kalau halaman tidak mempunyai
-         * productGrid, hentikan.
+         * HALAMAN MENU
+         *
+         * Menampilkan SEMUA produk.
+         * Filter kategori tetap berlaku.
          */
 
-        if (!productGrid) {
+        visibleProducts =
+            category === "Semua"
 
-            return;
+                ? products
 
-        }
-
-
-        activeFilter = category;
-
-
-        let visibleProducts;
-
-
-        /* =================================
-           HOME
-           Hanya Best Seller
-        ================================= */
-
-        if (!isMenuPage) {
-
-            visibleProducts =
-                products.filter(
+                : products.filter(
                     (product) =>
-                        product.bestSeller === true
+                        product.category === category
                 );
 
-        }
+    } else {
+
+        /*
+         * HALAMAN HOME
+         *
+         * Hanya menampilkan Best Seller.
+         */
+
+        visibleProducts =
+            products.filter(
+                (product) =>
+                    product.bestSeller === true
+            );
+
+    }
 
 
-        /* =================================
-           MENU
-           Semua Produk + Filter
-        ================================= */
+    // =========================================
+    // TAMPILKAN PRODUK
+    // =========================================
 
-        else {
+    productGrid.innerHTML =
+        visibleProducts
+            .map(productCardTemplate)
+            .join("");
 
-            if (category === "Semua") {
 
-                visibleProducts =
-                    products;
+    // =========================================
+    // ANIMASI
+    // =========================================
 
-            } else {
+    observeReveal(
+        productGrid.querySelectorAll(
+            ".product-card"
+        )
+    );
 
-                visibleProducts =
-                    products.filter(
-                        (product) =>
-                            product.category ===
-                            category
+
+    // =========================================
+    // DETAIL BUTTON
+    // =========================================
+
+    bindDetailButtons();
+
+}
+
+// =====================
+// Detail List
+// =====================
+function detailList(items) {
+
+    return `
+
+        <ul>
+
+            ${items
+                .map(
+                    (item) =>
+                        `<li>${item}</li>`
+                )
+                .join("")}
+
+        </ul>
+
+    `;
+
+}
+
+
+// =====================
+// Detail Buttons
+// =====================
+function bindDetailButtons() {
+
+    if (!productGrid) return;
+
+
+    productGrid
+        .querySelectorAll(".detail-btn")
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const card =
+                        this.closest(".card");
+
+                    if (!card) return;
+
+
+                    const detail =
+                        card.querySelector(
+                            ".detail-content"
+                        );
+
+                    if (!detail) return;
+
+
+                    const isCloseButton =
+                        this.classList.contains(
+                            "close-detail-btn"
+                        );
+
+
+                    const isOpen =
+                        isCloseButton
+
+                            ? false
+
+                            : detail.classList.toggle(
+                                "active-detail"
+                            );
+
+
+                    if (isCloseButton) {
+
+                        detail.classList.remove(
+                            "active-detail"
+                        );
+
+                    }
+
+
+                    const openButton =
+                        card.querySelector(
+                            ".detail-btn:not(.close-detail-btn)"
+                        );
+
+
+                    if (!openButton) return;
+
+
+                    openButton.hidden =
+                        isOpen;
+
+
+                    openButton.textContent =
+                        "Lihat Detail";
+
+
+                    openButton.setAttribute(
+                        "aria-expanded",
+                        String(isOpen)
                     );
 
-            }
+                }
+            );
 
-        }
+        });
 
+}
 
-        /* =================================
-           EMPTY STATE
-        ================================= */
 
-        if (
-            visibleProducts.length === 0
-        ) {
+// =====================
+// Product Filter
+// =====================
+filterButtons.forEach((button) => {
 
-            productGrid.innerHTML = `
-
-                <div class="empty-menu">
-
-                    <h3>
-                        Menu belum tersedia
-                    </h3>
-
-                    <p>
-                        Belum ada produk
-                        pada kategori ini.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        /* =================================
-           RENDER
-        ================================= */
-
-        productGrid.innerHTML =
-            visibleProducts
-                .map(
-                    productCardTemplate
-                )
-                .join("");
-
-
-        /* =================================
-           REVEAL
-        ================================= */
-
-        observeReveal(
-            productGrid.querySelectorAll(
-                ".product-card"
-            )
-        );
-
-
-        /* =================================
-           DETAIL BUTTON
-        ================================= */
-
-        bindDetailButtons();
-
-    }
-
-
-
-    /* =====================================
-       DETAIL BUTTONS
-    ===================================== */
-
-    function bindDetailButtons() {
-
-        if (!productGrid) {
-
-            return;
-
-        }
-
-
-        productGrid
-            .querySelectorAll(
-                ".detail-btn"
-            )
-            .forEach((button) => {
-
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-
-                        const card =
-                            this.closest(
-                                ".product-card"
-                            );
-
-
-                        if (!card) {
-
-                            return;
-
-                        }
-
-
-                        const detail =
-                            card.querySelector(
-                                ".detail-content"
-                            );
-
-
-                        const openButton =
-                            card.querySelector(
-                                ".detail-btn:not(.close-detail-btn)"
-                            );
-
-
-                        const isCloseButton =
-                            this.classList.contains(
-                                "close-detail-btn"
-                            );
-
-
-                        /* =========================
-                           CLOSE DETAIL
-                        ========================= */
-
-                        if (
-                            isCloseButton
-                        ) {
-
-                            detail.classList.remove(
-                                "active-detail"
-                            );
-
-
-                            if (openButton) {
-
-                                openButton.hidden =
-                                    false;
-
-                                openButton.setAttribute(
-                                    "aria-expanded",
-                                    "false"
-                                );
-
-                            }
-
-
-                            return;
-
-                        }
-
-
-                        /* =========================
-                           OPEN DETAIL
-                        ========================= */
-
-                        const isCurrentlyOpen =
-                            detail.classList.contains(
-                                "active-detail"
-                            );
-
-
-                        /*
-                         * Tutup detail pada
-                         * kartu lain.
-                         */
-
-                        productGrid
-                            .querySelectorAll(
-                                ".detail-content.active-detail"
-                            )
-                            .forEach(
-                                (otherDetail) => {
-
-                                    otherDetail.classList.remove(
-                                        "active-detail"
-                                    );
-
-                                    const otherCard =
-                                        otherDetail.closest(
-                                            ".product-card"
-                                        );
-
-                                    const otherButton =
-                                        otherCard?.querySelector(
-                                            ".detail-btn:not(.close-detail-btn)"
-                                        );
-
-
-                                    if (
-                                        otherButton
-                                    ) {
-
-                                        otherButton.hidden =
-                                            false;
-
-                                        otherButton.setAttribute(
-                                            "aria-expanded",
-                                            "false"
-                                        );
-
-                                    }
-
-                                }
-                            );
-
-
-                        if (
-                            isCurrentlyOpen
-                        ) {
-
-                            detail.classList.remove(
-                                "active-detail"
-                            );
-
-                            this.hidden =
-                                false;
-
-                            this.setAttribute(
-                                "aria-expanded",
-                                "false"
-                            );
-
-                        } else {
-
-                            detail.classList.add(
-                                "active-detail"
-                            );
-
-                            this.hidden =
-                                true;
-
-                            this.setAttribute(
-                                "aria-expanded",
-                                "true"
-                            );
-
-                        }
-
-                    }
-                );
-
-            });
-
-    }
-
-
-
-    /* =====================================
-       FILTER BUTTONS
-    ===================================== */
-
-    if (filterButtons.length > 0) {
-
-        filterButtons.forEach(
-            (button) => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-
-                        const selectedFilter =
-                            button.dataset.filter;
-
-
-                        if (
-                            !selectedFilter
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        if (
-                            selectedFilter ===
-                            activeFilter
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        /* =========================
-                           ACTIVE BUTTON
-                        ========================= */
-
-                        filterButtons.forEach(
-                            (filterButton) => {
-
-                                filterButton.classList.toggle(
-                                    "active",
-                                    filterButton ===
-                                    button
-                                );
-
-                            }
-                        );
-
-
-                        /* =========================
-                           RENDER FILTER
-                        ========================= */
-
-                        renderProducts(
-                            selectedFilter
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================
-       INITIAL PRODUCT RENDER
-    ===================================== */
-
-    renderProducts();
-
-
-
-    /* =====================================
-       BUTTON RIPPLE
-    ===================================== */
-
-    document.addEventListener(
+    button.addEventListener(
         "click",
-        (event) => {
+        () => {
 
+            const selectedFilter =
+                button.dataset.filter;
 
-            const button =
-                event.target.closest(
-                    ".btn, \
-                     .btn-outline, \
-                     .card button, \
-                     .filter-btn, \
-                     .modal-close"
-                );
-
-
-            if (!button) {
-
-                return;
-
-            }
-
-
-            /*
-             * Hindari ripple jika
-             * elemen berada di luar body.
-             */
-
-            if (!document.body.contains(button)) {
-
-                return;
-
-            }
-
-
-            const diameter =
-                Math.max(
-                    button.clientWidth,
-                    button.clientHeight
-                );
-
-
-            const rect =
-                button.getBoundingClientRect();
-
-
-            const circle =
-                document.createElement(
-                    "span"
-                );
-
-
-            circle.style.width =
-                `${diameter}px`;
-
-
-            circle.style.height =
-                `${diameter}px`;
-
-
-            circle.style.left =
-                `${event.clientX -
-                    rect.left -
-                    diameter / 2}px`;
-
-
-            circle.style.top =
-                `${event.clientY -
-                    rect.top -
-                    diameter / 2}px`;
-
-
-            circle.classList.add(
-                "ripple"
-            );
-
-
-            const oldRipple =
-                button.querySelector(
-                    ".ripple"
-                );
-
-
-            if (oldRipple) {
-
-                oldRipple.remove();
-
-            }
-
-
-            button.appendChild(
-                circle
-            );
-
-        }
-    );
-
-
-
-    /* =====================================
-       COFFEE CURSOR TRAIL
-    ===================================== */
-
-    const trail = [
-        "🫘",
-        "☕",
-        "🤎"
-    ];
-
-
-    let lastX = 0;
-    let lastY = 0;
-
-
-    document.addEventListener(
-        "mousemove",
-        (event) => {
-
-
-            /*
-             * Kurangi efek pada perangkat
-             * dengan pointer coarse/touch.
-             */
 
             if (
-                window.matchMedia(
-                    "(pointer: coarse)"
-                ).matches
+                selectedFilter ===
+                activeFilter
             ) {
-
                 return;
-
             }
 
 
-            const distance =
-                Math.hypot(
-                    event.clientX - lastX,
-                    event.clientY - lastY
-                );
+            filterButtons.forEach(
+                (filterButton) => {
+
+                    filterButton.classList.toggle(
+                        "active",
+                        filterButton === button
+                    );
+
+                }
+            );
 
 
-            if (distance < 50) {
-
-                return;
-
-            }
-
-
-            lastX =
-                event.clientX;
-
-            lastY =
-                event.clientY;
-
-
-            createTrail(
-                event.clientX,
-                event.clientY
+            renderProducts(
+                selectedFilter
             );
 
         }
     );
 
+});
 
-    function createTrail(x, y) {
 
-        const element =
+// =====================
+// Initial Product Render
+// =====================
+
+/*
+ * Hanya render produk jika halaman
+ * memiliki #productGrid.
+ *
+ * Ini penting untuk menu/index.html
+ * dan halaman lain.
+ */
+
+if (productGrid) {
+    renderProducts();
+}
+
+
+// =====================
+// Button Ripple
+// =====================
+document.addEventListener(
+    "click",
+    (event) => {
+
+        const button =
+            event.target.closest(
+                ".btn,.card button,.filter-btn,.modal-close"
+            );
+
+
+        if (!button) return;
+
+
+        const circle =
             document.createElement(
                 "span"
             );
 
 
-        element.className =
-            "coffee-trail";
+        const diameter =
+            Math.max(
+                button.clientWidth,
+                button.clientHeight
+            );
 
 
-        element.textContent =
-            trail[
-                Math.floor(
-                    Math.random() *
-                    trail.length
-                )
-            ];
+        const rect =
+            button.getBoundingClientRect();
 
 
-        element.style.left =
-            `${x +
-                (Math.random() - 0.5) *
-                30}px`;
+        circle.style.width =
+            `${diameter}px`;
+
+        circle.style.height =
+            `${diameter}px`;
 
 
-        element.style.top =
-            `${y +
-                (Math.random() - 0.5) *
-                20}px`;
+        circle.style.left =
+            `${event.clientX -
+                rect.left -
+                diameter / 2}px`;
 
 
-        element.style.fontSize =
-            `${16 +
-                Math.random() * 6}px`;
+        circle.style.top =
+            `${event.clientY -
+                rect.top -
+                diameter / 2}px`;
 
 
-        element.style.setProperty(
-            "--moveX",
-            `${Math.random() * 80 - 40}px`
+        circle.classList.add(
+            "ripple"
         );
 
 
-        element.style.setProperty(
-            "--moveY",
-            `${-60 -
-                Math.random() * 60}px`
-        );
+        button
+            .querySelector(".ripple")
+            ?.remove();
 
 
-        element.style.setProperty(
-            "--rotate",
-            `${Math.random() * 60 - 30}deg`
-        );
-
-
-        document.body.appendChild(
-            element
-        );
-
-
-        setTimeout(
-            () => {
-
-                element.remove();
-
-            },
-            900
+        button.appendChild(
+            circle
         );
 
     }
+);
 
 
+// =====================
+// Coffee Cursor Trail
+// =====================
+const trail = [
+    "🫘",
+    "☕",
+    "🤎"
+];
 
-    /* =====================================
-       CONSOLE
-    ===================================== */
 
-    console.log(
-        "%c☕ Welcome to Sheilatte",
-        "color:#8B5E3C;font-size:20px;font-weight:bold"
+let lastX = 0;
+let lastY = 0;
+
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        const distance =
+            Math.hypot(
+                event.clientX - lastX,
+                event.clientY - lastY
+            );
+
+
+        if (distance < 50) return;
+
+
+        lastX = event.clientX;
+        lastY = event.clientY;
+
+
+        createTrail(
+            event.clientX,
+            event.clientY
+        );
+
+    }
+);
+
+
+function createTrail(x, y) {
+
+    const element =
+        document.createElement(
+            "span"
+        );
+
+
+    element.className =
+        "coffee-trail";
+
+
+    element.textContent =
+        trail[
+            Math.floor(
+                Math.random() *
+                trail.length
+            )
+        ];
+
+
+    element.style.left =
+        `${x +
+            (Math.random() - 0.5) * 30}px`;
+
+
+    element.style.top =
+        `${y +
+            (Math.random() - 0.5) * 20}px`;
+
+
+    element.style.fontSize =
+        `${16 +
+            Math.random() * 6}px`;
+
+
+    element.style.setProperty(
+        "--moveX",
+        `${Math.random() * 80 - 40}px`
     );
 
 
-    console.log(
-        `%cPage: ${
-            isMenuPage
-                ? "MENU"
-                : "HOME"
-        }`,
-        "color:#8B5E3C;font-weight:bold"
+    element.style.setProperty(
+        "--moveY",
+        `${-60 -
+            Math.random() * 60}px`
     );
 
 
-    console.log(
-        `%cProducts: ${products.length}`,
-        "color:#8B5E3C;font-weight:bold"
+    element.style.setProperty(
+        "--rotate",
+        `${Math.random() * 60 - 30}deg`
     );
 
 
-    console.log(
-        `%cBest Sellers: ${
-            products.filter(
-                product =>
-                    product.bestSeller === true
-            ).length
-        }`,
-        "color:#8B5E3C;font-weight:bold"
+    document.body.appendChild(
+        element
     );
 
-});
+
+    setTimeout(
+        () => element.remove(),
+        900
+    );
+
+}
+
+
+// =====================
+// Console
+// =====================
+console.log(
+    "%c☕ Welcome to Sheilatte",
+    "color:#8B5E3C;font-size:20px;font-weight:bold"
+);
