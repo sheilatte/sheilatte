@@ -263,7 +263,6 @@ const products = [
         name: "Sheilatte Signature",
         category: "Kopi",
         price: "Rp32.000",
-        bestSeller: true,
 
         image:
             "assets/images/sheilatte.webp",
@@ -293,7 +292,6 @@ const products = [
         name: "Caramel Latte",
         category: "Kopi",
         price: "Rp30.000",
-        bestSeller: true,
 
         image:
             "assets/images/caramel.jpg",
@@ -323,7 +321,6 @@ const products = [
         name: "Americano",
         category: "Kopi",
         price: "Rp24.000",
-        bestSeller: true,
 
         image:
             "assets/images/americano.jpeg",
@@ -353,7 +350,6 @@ const products = [
         name: "Cappuccino",
         category: "Kopi",
         price: "Rp30.000",
-        bestSeller: true,
 
         image:
             "assets/images/cappuccino.jpg",
@@ -375,322 +371,8 @@ const products = [
 
         serving:
             "Sangat cocok disajikan hangat bersama pastry favorit."
-    },
-   
-   {
-    id: 5,
-    name: "Hazelnut Latte",
-    category: "Kopi",
-    price: "Rp32.000",
-    bestSeller: false,
+    }
 
-    image: "assets/images/hazelnut-latte.jpg",
-
-    description:
-        "Latte creamy dengan aroma hazelnut",
-
-    details:
-        "Perpaduan espresso pilihan, fresh milk, dan hazelnut syrup yang menghasilkan rasa kopi creamy dengan aroma kacang hazelnut yang lembut.",
-
-    ingredients: [
-        "Double Shot Espresso",
-        "Fresh Milk",
-        "Hazelnut Syrup"
-    ],
-
-    taste:
-        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
-
-    serving:
-        "Nikmat disajikan dingin maupun hangat."
-},
-
-{
-    id: 6,
-    name: "Vanilla Latte",
-    category: "Kopi",
-    price: "Rp31.000",
-    bestSeller: false,
-
-    image: "assets/images/vanilla-latte.jpg",
-
-    description:
-        "Latte lembut dengan sentuhan vanilla",
-
-    details:
-        "Espresso dan fresh milk dipadukan dengan vanilla syrup untuk menciptakan minuman kopi yang lembut, creamy, dan harum.",
-
-    ingredients: [
-        "Double Shot Espresso",
-        "Fresh Milk",
-        "Vanilla Syrup"
-    ],
-
-    taste:
-        "Lembut, creamy, sedikit manis, dengan aroma vanilla yang harum.",
-
-    serving:
-        "Cocok dinikmati dingin untuk menemani aktivitas sehari-hari."
-},
-
-{
-    id: 7,
-    name: "Mocha Latte",
-    category: "Kopi",
-    price: "Rp32.000",
-    bestSeller: false,
-
-    image: "assets/images/mocha-latte.jpg",
-
-    description:
-        "Perpaduan kopi dan cokelat yang creamy",
-
-    details:
-        "Espresso, fresh milk, dan cokelat premium berpadu menghasilkan rasa kopi cokelat yang kaya namun tetap lembut.",
-
-    ingredients: [
-        "Double Shot Espresso",
-        "Fresh Milk",
-        "Chocolate Sauce"
-    ],
-
-    taste:
-        "Rasa kopi dan cokelat seimbang dengan tekstur creamy.",
-
-    serving:
-        "Nikmat disajikan dingin dengan tambahan whipped cream."
-},
-
-{
-    id: 8,
-    name: "Matcha Latte",
-    category: "Non-Kopi",
-    price: "Rp30.000",
-    bestSeller: false,
-
-    image: "assets/images/matcha-latte.jpg",
-
-    description:
-        "Matcha premium dengan fresh milk",
-
-    details:
-        "Matcha pilihan yang dipadukan dengan fresh milk menghasilkan minuman creamy dengan karakter rasa matcha yang khas.",
-
-    ingredients: [
-        "Premium Matcha",
-        "Fresh Milk",
-        "Simple Syrup"
-    ],
-
-    taste:
-        "Creamy, sedikit earthy, dengan rasa matcha yang lembut.",
-
-    serving:
-        "Paling nikmat disajikan dingin."
-},
-
-{
-    id: 9,
-    name: "Chocolate Latte",
-    category: "Non-Kopi",
-    price: "Rp29.000",
-    bestSeller: false,
-
-    image: "assets/images/chocolate-latte.jpg",
-
-    description:
-        "Cokelat creamy dengan fresh milk",
-
-    details:
-        "Minuman cokelat dengan perpaduan chocolate sauce dan fresh milk yang menghasilkan rasa manis dan creamy.",
-
-    ingredients: [
-        "Premium Chocolate",
-        "Fresh Milk",
-        "Chocolate Sauce"
-    ],
-
-    taste:
-        "Cokelat terasa kaya, manis, creamy, dan nyaman diminum.",
-
-    serving:
-        "Cocok disajikan dingin maupun hangat."
-},
-
-{
-    id: 10,
-    name: "Taro Latte",
-    category: "Non-Kopi",
-    price: "Rp29.000",
-    bestSeller: false,
-
-    image: "assets/images/taro-latte.jpg",
-
-    description:
-        "Taro creamy dengan rasa manis lembut",
-
-    details:
-        "Taro powder yang creamy dipadukan dengan fresh milk untuk menghasilkan minuman dengan aroma dan rasa taro yang khas.",
-
-    ingredients: [
-        "Premium Taro Powder",
-        "Fresh Milk",
-        "Simple Syrup"
-    ],
-
-    taste:
-        "Manis lembut, creamy, dengan aroma taro yang khas.",
-
-    serving:
-        "Nikmat disajikan dingin dengan es."
-},
-
-{
-    id: 11,
-    name: "Lemon Tea",
-    category: "Tea",
-    price: "Rp22.000",
-    bestSeller: false,
-
-    image: "assets/images/lemon-tea.jpg",
-
-    description:
-        "Teh segar dengan perasan lemon",
-
-    details:
-        "Teh pilihan dengan perpaduan lemon segar yang memberikan rasa ringan dan menyegarkan.",
-
-    ingredients: [
-        "Premium Tea",
-        "Fresh Lemon",
-        "Simple Syrup"
-    ],
-
-    taste:
-        "Segar, sedikit asam, manis ringan, dengan aroma lemon.",
-
-    serving:
-        "Sangat cocok disajikan dingin dengan es."
-},
-
-{
-    id: 12,
-    name: "Lychee Tea",
-    category: "Tea",
-    price: "Rp24.000",
-    bestSeller: false,
-
-    image: "assets/images/lychee-tea.jpg",
-
-    description:
-        "Teh segar dengan aroma buah lychee",
-
-    details:
-        "Teh pilihan yang dipadukan dengan rasa lychee untuk menghasilkan minuman yang ringan, fruity, dan menyegarkan.",
-
-    ingredients: [
-        "Premium Tea",
-        "Lychee Syrup",
-        "Lychee Fruit"
-    ],
-
-    taste:
-        "Manis, fruity, ringan, dengan aroma lychee yang segar.",
-
-    serving:
-        "Paling nikmat disajikan dingin."
-},
-
-{
-    id: 13,
-    name: "Peach Tea",
-    category: "Tea",
-    price: "Rp24.000",
-    bestSeller: false,
-
-    image: "assets/images/peach-tea.jpg",
-
-    description:
-        "Teh dengan rasa peach yang menyegarkan",
-
-    details:
-        "Teh pilihan dengan perpaduan peach yang memberikan rasa fruity dan aroma buah yang menyegarkan.",
-
-    ingredients: [
-        "Premium Tea",
-        "Peach Syrup",
-        "Fresh Peach"
-    ],
-
-    taste:
-        "Manis ringan, fruity, dan menyegarkan.",
-
-    serving:
-        "Disajikan dingin dengan es agar lebih segar."
-},
-
-{
-    id: 14,
-    name: "Butter Croissant",
-    category: "Snack",
-    price: "Rp20.000",
-    bestSeller: false,
-
-    image: "assets/images/butter-croissant.jpg",
-
-    description:
-        "Croissant renyah dengan aroma butter",
-
-    details:
-        "Croissant dengan tekstur luar yang renyah dan bagian dalam yang lembut dengan aroma butter yang khas.",
-
-    ingredients: [
-        "Premium Flour",
-        "Butter",
-        "Milk"
-    ],
-
-    taste:
-        "Gurih, buttery, renyah di luar dan lembut di dalam.",
-
-    serving:
-        "Sangat cocok sebagai teman kopi di pagi atau sore hari."
-},
-
-{
-    id: 15,
-    name: "Chocolate Donut",
-    category: "Snack",
-    price: "Rp18.000",
-    bestSeller: false,
-
-    image: "assets/images/chocolate-donut.jpg",
-
-    description:
-        "Donat lembut dengan topping cokelat",
-
-    details:
-        "Donat lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
-
-    ingredients: [
-        "Premium Flour",
-        "Milk",
-        "Chocolate"
-    ],
-
-    taste:
-        "Lembut, manis, dengan rasa cokelat yang kaya.",
-
-    serving:
-        "Cocok dinikmati bersama Latte atau Cappuccino."
-}
-    taste:
-        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
-
-    serving:
-        "Nikmat disajikan dingin maupun hangat."
-}
-   
 ];
 
 
@@ -859,77 +541,38 @@ function productCardTemplate(
 // =====================
 // Render Products
 // =====================
-function renderProducts(category = activeFilter) {
+function renderProducts(
+    category = activeFilter
+) {
+
+    /*
+     * Halaman seperti homepage atau halaman
+     * lain yang tidak memiliki productGrid
+     * tidak akan mengalami error.
+     */
 
     if (!productGrid) return;
+
 
     activeFilter = category;
 
 
-    // =========================================
-    // CEK HALAMAN
-    // =========================================
+    const visibleProducts =
+        category === "Semua"
 
-    const isMenuPage =
-        window.location.pathname.includes("/menu/");
+            ? products
 
-
-    // =========================================
-    // TENTUKAN PRODUK YANG AKAN DITAMPILKAN
-    // =========================================
-
-    let visibleProducts;
-
-
-    if (isMenuPage) {
-
-        /*
-         * HALAMAN MENU
-         *
-         * Menampilkan SEMUA produk.
-         * Filter kategori tetap berlaku.
-         */
-
-        visibleProducts =
-            category === "Semua"
-
-                ? products
-
-                : products.filter(
-                    (product) =>
-                        product.category === category
-                );
-
-    } else {
-
-        /*
-         * HALAMAN HOME
-         *
-         * Hanya menampilkan Best Seller.
-         */
-
-        visibleProducts =
-            products.filter(
+            : products.filter(
                 (product) =>
-                    product.bestSeller === true
+                    product.category === category
             );
 
-    }
-
-
-    // =========================================
-    // TAMPILKAN PRODUK
-    // =========================================
 
     productGrid.innerHTML =
         visibleProducts
             .map(productCardTemplate)
             .join("");
 
-
-    // =========================================
-    // ANIMASI
-    // =========================================
 
     observeReveal(
         productGrid.querySelectorAll(
@@ -938,13 +581,10 @@ function renderProducts(category = activeFilter) {
     );
 
 
-    // =========================================
-    // DETAIL BUTTON
-    // =========================================
-
     bindDetailButtons();
 
 }
+
 
 // =====================
 // Detail List
