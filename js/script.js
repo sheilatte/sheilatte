@@ -263,6 +263,7 @@ const products = [
         name: "Sheilatte Signature",
         category: "Kopi",
         price: "Rp32.000",
+        bestSeller: true,
 
         image:
             "assets/images/sheilatte.webp",
@@ -292,6 +293,7 @@ const products = [
         name: "Caramel Latte",
         category: "Kopi",
         price: "Rp30.000",
+        bestSeller: true,
 
         image:
             "assets/images/caramel.jpg",
@@ -321,6 +323,7 @@ const products = [
         name: "Americano",
         category: "Kopi",
         price: "Rp24.000",
+        bestSeller: true,
 
         image:
             "assets/images/americano.jpeg",
@@ -350,6 +353,7 @@ const products = [
         name: "Cappuccino",
         category: "Kopi",
         price: "Rp30.000",
+        bestSeller: true,
 
         image:
             "assets/images/cappuccino.jpg",
@@ -371,8 +375,120 @@ const products = [
 
         serving:
             "Sangat cocok disajikan hangat bersama pastry favorit."
-    }
+    },
+   
+   {
+    id: 5,
+    name: "Hazelnut Latte",
+    category: "Kopi",
+    price: "Rp32.000",
+    bestSeller: false,
 
+    image: "assets/images/hazelnut.jpg",
+
+    description:
+        "Latte creamy dengan aroma hazelnut",
+
+    details:
+        "Perpaduan espresso, fresh milk, dan hazelnut syrup yang menghasilkan rasa creamy dengan aroma kacang yang lembut.",
+
+    ingredients: [
+        "Double Shot Espresso",
+        "Fresh Milk",
+        "Hazelnut Syrup"
+    ],
+
+    taste:
+        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
+
+    serving:
+        "Nikmat disajikan dingin maupun hangat."
+},
+
+   {
+    id: 6,
+    name: "Matcha Latte",
+    category: "Kopi",
+    price: "Rp32.000",
+    bestSeller: false,
+
+    image: "assets/images/hazelnut.jpg",
+
+    description:
+        "Latte creamy dengan aroma hazelnut",
+
+    details:
+        "Perpaduan espresso, fresh milk, dan hazelnut syrup yang menghasilkan rasa creamy dengan aroma kacang yang lembut.",
+
+    ingredients: [
+        "Double Shot Espresso",
+        "Fresh Milk",
+        "Hazelnut Syrup"
+    ],
+
+    taste:
+        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
+
+    serving:
+        "Nikmat disajikan dingin maupun hangat."
+},
+
+   {
+    id: 7,
+    name: "Oreo Latte",
+    category: "Kopi",
+    price: "Rp32.000",
+    bestSeller: false,
+
+    image: "assets/images/hazelnut.jpg",
+
+    description:
+        "Latte creamy dengan aroma hazelnut",
+
+    details:
+        "Perpaduan espresso, fresh milk, dan hazelnut syrup yang menghasilkan rasa creamy dengan aroma kacang yang lembut.",
+
+    ingredients: [
+        "Double Shot Espresso",
+        "Fresh Milk",
+        "Hazelnut Syrup"
+    ],
+
+    taste:
+        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
+
+    serving:
+        "Nikmat disajikan dingin maupun hangat."
+},
+
+   {
+    id: 8,
+    name: "Thaitea",
+    category: "Kopi",
+    price: "Rp32.000",
+    bestSeller: false,
+
+    image: "assets/images/hazelnut.jpg",
+
+    description:
+        "Latte creamy dengan aroma hazelnut",
+
+    details:
+        "Perpaduan espresso, fresh milk, dan hazelnut syrup yang menghasilkan rasa creamy dengan aroma kacang yang lembut.",
+
+    ingredients: [
+        "Double Shot Espresso",
+        "Fresh Milk",
+        "Hazelnut Syrup"
+    ],
+
+    taste:
+        "Creamy, manis lembut, dengan aroma hazelnut yang khas.",
+
+    serving:
+        "Nikmat disajikan dingin maupun hangat."
+}
+   
 ];
 
 
@@ -541,38 +657,77 @@ function productCardTemplate(
 // =====================
 // Render Products
 // =====================
-function renderProducts(
-    category = activeFilter
-) {
-
-    /*
-     * Halaman seperti homepage atau halaman
-     * lain yang tidak memiliki productGrid
-     * tidak akan mengalami error.
-     */
+function renderProducts(category = activeFilter) {
 
     if (!productGrid) return;
-
 
     activeFilter = category;
 
 
-    const visibleProducts =
-        category === "Semua"
+    // =========================================
+    // CEK HALAMAN
+    // =========================================
 
-            ? products
+    const isMenuPage =
+        window.location.pathname.includes("/menu/");
 
-            : products.filter(
+
+    // =========================================
+    // TENTUKAN PRODUK YANG AKAN DITAMPILKAN
+    // =========================================
+
+    let visibleProducts;
+
+
+    if (isMenuPage) {
+
+        /*
+         * HALAMAN MENU
+         *
+         * Menampilkan SEMUA produk.
+         * Filter kategori tetap berlaku.
+         */
+
+        visibleProducts =
+            category === "Semua"
+
+                ? products
+
+                : products.filter(
+                    (product) =>
+                        product.category === category
+                );
+
+    } else {
+
+        /*
+         * HALAMAN HOME
+         *
+         * Hanya menampilkan Best Seller.
+         */
+
+        visibleProducts =
+            products.filter(
                 (product) =>
-                    product.category === category
+                    product.bestSeller === true
             );
 
+    }
+
+
+    // =========================================
+    // TAMPILKAN PRODUK
+    // =========================================
 
     productGrid.innerHTML =
         visibleProducts
             .map(productCardTemplate)
             .join("");
 
+
+    // =========================================
+    // ANIMASI
+    // =========================================
 
     observeReveal(
         productGrid.querySelectorAll(
@@ -581,10 +736,13 @@ function renderProducts(
     );
 
 
+    // =========================================
+    // DETAIL BUTTON
+    // =========================================
+
     bindDetailButtons();
 
 }
-
 
 // =====================
 // Detail List
