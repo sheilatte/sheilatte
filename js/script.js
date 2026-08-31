@@ -229,7 +229,7 @@ const products = [
     price: "Rp30.000",
     bestSeller: false,
 
-    image: "assets/images/matcha-latte.jpg",
+    image: "assets/images/matcha-latte.jpeg",
 
     description:
         "Matcha premium dengan fresh milk",
@@ -420,18 +420,18 @@ const products = [
 
 {
     id: 15,
-    name: "Chocolate Donut",
+    name: "Chocolate Cake",
     category: "Snack",
     price: "Rp18.000",
     bestSeller: false,
 
-    image: "assets/images/chocolate-donut.jpg",
+    image: "assets/images/chocolate-cake.jpg",
 
     description:
-        "Donat lembut dengan topping cokelat",
+        "Kue lembut dengan topping cokelat",
 
     details:
-        "Donat lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
+        "Kue lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
 
     ingredients: [
         "Premium Flour",
