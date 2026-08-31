@@ -428,10 +428,10 @@ const products = [
     image: "assets/images/chocolate-cake.jpg",
 
     description:
-        "Kue lembut dengan topping cokelat",
+        "Cake lembut dengan topping cokelat",
 
     details:
-        "Kue lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
+        "Chocolate Cake dengan tekstur lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
 
     ingredients: [
         "Premium Flour",
