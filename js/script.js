@@ -126,7 +126,7 @@ const products = [
     {
         id: 2, name: "Caramel Latte", category: "Kopi", price: "Rp30.000",
        bestSeller: true,
-        image: "assets/images/caramel.jpg", description: "Latte dengan saus caramel premium",
+        image: imagePath("caramel.jpg"), description: "Latte dengan saus caramel premium",
         details: "Perpaduan espresso, susu lembut, dan saus caramel premium yang menghadirkan rasa manis hangat dengan aroma kopi yang tetap terasa.",
         ingredients: ["Double Shot Espresso", "Fresh Milk", "Saus Caramel Premium"],
         taste: "Manis caramel yang lembut, tekstur creamy, dengan aroma kopi yang hangat.",
@@ -135,7 +135,7 @@ const products = [
     {
         id: 3, name: "Americano", category: "Kopi", price: "Rp24.000",
        bestSeller: true,
-        image: "assets/images/americano.jpeg", description: "Espresso dengan cita rasa kuat",
+        image: imagePath("americano.jpeg"), description: "Espresso dengan cita rasa kuat",
         details: "Americano merupakan minuman kopi klasik yang dibuat dari espresso yang dipadukan dengan air panas. Minuman ini menghasilkan rasa kopi yang kuat, bersih, dan ringan untuk dinikmati kapan saja.",
         ingredients: ["Double Shot Espresso", "Air Panas", "100% Arabica Coffee Beans"],
         taste: "Aroma kopi kuat, sedikit pahit, sentuhan dark chocolate, dan aftertaste bersih.",
@@ -144,7 +144,7 @@ const products = [
     {
         id: 4, name: "Cappuccino", category: "Kopi", price: "Rp30.000",
        bestSeller: true,
-        image: "assets/images/cappuccino.jpg", description: "Espresso dengan steamed milk dan foam lembut",
+        image: imagePath("cappuccino.jpg"), description: "Espresso dengan steamed milk dan foam lembut",
         details: "Cappuccino klasik dengan keseimbangan espresso, steamed milk, dan foam susu lembut yang membuat setiap tegukan terasa hangat dan nyaman.",
         ingredients: ["Double Shot Espresso", "Steamed Milk", "Milk Foam"],
         taste: "Kopi terasa jelas dengan tekstur foam ringan dan creamy.",
@@ -184,7 +184,7 @@ const products = [
     price: "Rp31.000",
     bestSeller: false,
 
-    image: "assets/images/vanilla-latte.jpg",
+    image: imagePath("vanilla-latte.jpg"),
 
     description:
         "Latte lembut dengan sentuhan vanilla",
@@ -212,7 +212,7 @@ const products = [
     price: "Rp32.000",
     bestSeller: false,
 
-    image: "assets/images/mocha-latte.jpg",
+    image: imagePath("mocha-latte.jpg"),
 
     description:
         "Perpaduan kopi dan cokelat yang creamy",
@@ -240,7 +240,7 @@ const products = [
     price: "Rp30.000",
     bestSeller: false,
 
-    image: "assets/images/matcha-latte.jpeg",
+    image: imagePath("matcha-latte.jpeg"),
 
     description:
         "Matcha premium dengan fresh milk",
@@ -268,7 +268,7 @@ const products = [
     price: "Rp29.000",
     bestSeller: false,
 
-    image: "assets/images/chocolate-latte.jpg",
+    image: imagePath("chocolate-latte.jpg"),
 
     description:
         "Cokelat creamy dengan fresh milk",
@@ -296,7 +296,7 @@ const products = [
     price: "Rp29.000",
     bestSeller: false,
 
-    image: "assets/images/taro-latte.jpg",
+    image: imagePath("taro-latte.jpg"),
 
     description:
         "Taro creamy dengan rasa manis lembut",
@@ -324,7 +324,7 @@ const products = [
     price: "Rp22.000",
     bestSeller: false,
 
-    image: "assets/images/lemon-tea.jpg",
+    image: imagePath("lemon-tea.jpg"),
 
     description:
         "Teh segar dengan perasan lemon",
@@ -352,7 +352,7 @@ const products = [
     price: "Rp24.000",
     bestSeller: false,
 
-    image: "assets/images/lychee-tea.jpg",
+    image: imagePath("lychee-tea.jpg"),
 
     description:
         "Teh segar dengan aroma buah lychee",
@@ -380,7 +380,7 @@ const products = [
     price: "Rp24.000",
     bestSeller: false,
 
-    image: "assets/images/peach-tea.jpg",
+    image: imagePath("peach-tea.jpg"),
 
     description:
         "Teh dengan rasa peach yang menyegarkan",
@@ -408,7 +408,7 @@ const products = [
     price: "Rp20.000",
     bestSeller: false,
 
-    image: "assets/images/butter-croissant.jpg",
+    image: imagePath("butter-croissant.jpg"),
 
     description:
         "Croissant renyah dengan aroma butter",
@@ -436,7 +436,7 @@ const products = [
     price: "Rp18.000",
     bestSeller: false,
 
-    image: "assets/images/chocolate-cake.jpg",
+    image: imagePath("chocolate-cake.jpg"),
 
     description:
         "Cake lembut dengan topping cokelat",
