@@ -4,6 +4,16 @@
 ===================================== */
 
 // =====================
+// IMAGE PATH
+// =====================
+
+const isMenuPage = window.location.pathname.includes("/menu/");
+
+const imagePath = (filename) => {
+    return `${isMenuPage ? "../" : ""}assets/images/${filename}`;
+};
+
+// =====================
 // Navbar Scroll
 // =====================
 const header = document.getElementById("header");
