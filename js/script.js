@@ -94,10 +94,12 @@ topButton.addEventListener("click", () => {
 // =====================
 const heroImage = document.querySelector(".hero-image img");
 
-window.addEventListener("scroll", () => {
-    heroImage.style.transform = `translateY(${window.scrollY * 0.15}px)`;
-});
-
+if (heroImage) {
+    window.addEventListener("scroll", () => {
+        heroImage.style.transform =
+            `translateY(${window.scrollY * 0.15}px)`;
+    });
+}
 // =====================
 // Product Data & Menu
 // =====================
@@ -144,7 +146,6 @@ const products = [
     category: "Kopi",
     price: "Rp32.000",
     bestSeller: false,
-
     image: "assets/images/hazelnut-latte.jpg",
 
     description:
