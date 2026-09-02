@@ -117,7 +117,7 @@ const products = [
     {
         id: 1, name: "Sheilatte Signature", category: "Kopi", price: "Rp32.000",
        bestSeller: true,
-        image: "assets/images/sheilatte.webp", description: "Espresso + Fresh Milk + Secret Cream",
+        image: imagePath("sheilatte.webp"), description: "Espresso + Fresh Milk + Secret Cream",
         details: "Racikan khas Sheilatte yang memadukan espresso pilihan, fresh milk, dan secret cream lembut untuk menghasilkan kopi susu yang creamy dan istimewa.",
         ingredients: ["Double Shot Espresso", "Fresh Milk", "Secret Cream Sheilatte"],
         taste: "Creamy dan lembut, rasa kopi seimbang dengan manis ringan, serta aftertaste milky yang nyaman.",
