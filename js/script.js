@@ -156,7 +156,7 @@ const products = [
     category: "Kopi",
     price: "Rp32.000",
     bestSeller: false,
-    image: "assets/images/hazelnut-latte.jpg",
+   image: imagePath("hazelnut-latte.jpg"),
 
     description:
         "Latte creamy dengan aroma hazelnut",
