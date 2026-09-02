@@ -463,7 +463,7 @@ const products = [
     price: "Rp18.000",
     bestSeller: false,
 
-    image: imagePath("chocolate-cake.jpg"),
+    image: imagePath("waffle.jpg"),
 
     description:
         "Cake lembut dengan topping cokelat",
