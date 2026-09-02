@@ -455,7 +455,35 @@ const products = [
 
     serving:
         "Cocok dinikmati bersama Latte atau Cappuccino."
-}
+},
+{
+    id: 16,
+    name: "Waffle",
+    category: "Snack",
+    price: "Rp18.000",
+    bestSeller: false,
+
+    image: imagePath("chocolate-cake.jpg"),
+
+    description:
+        "Cake lembut dengan topping cokelat",
+
+    details:
+        "Chocolate Cake dengan tekstur lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
+
+    ingredients: [
+        "Premium Flour",
+        "Milk",
+        "Chocolate"
+    ],
+
+    taste:
+        "Lembut, manis, dengan rasa cokelat yang kaya.",
+
+    serving:
+        "Cocok dinikmati bersama Latte atau Cappuccino."
+
+  } 
 ];
 
 const productGrid = document.getElementById("productGrid");
