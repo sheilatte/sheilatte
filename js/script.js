@@ -466,19 +466,19 @@ const products = [
     image: imagePath("waffle.jpg"),
 
     description:
-        "Cake lembut dengan topping cokelat",
+        "Waffle lembut dengan topping eskrim dan buah strawberi",
 
     details:
-        "Chocolate Cake dengan tekstur lembut dengan lapisan cokelat yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
+        "Waffle dengan tekstur lembut dengan es krim yang manis dan cocok dipadukan dengan berbagai minuman Sheilatte.",
 
     ingredients: [
         "Premium Flour",
         "Milk",
-        "Chocolate"
+        "Vanilla"
     ],
 
     taste:
-        "Lembut, manis, dengan rasa cokelat yang kaya.",
+        "Lembut, manis, dengan rasa manis yang kaya.",
 
     serving:
         "Cocok dinikmati bersama Latte atau Cappuccino."
