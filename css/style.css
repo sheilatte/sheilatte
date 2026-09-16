@@ -1260,3 +1260,345 @@ body{
 .about-highlight i {
     color: #c48b57;
 }
+
+/* =====================================
+   ABOUT PAGE
+===================================== */
+
+.about-hero {
+    overflow: hidden;
+}
+
+
+/* =====================
+   WHY SHEILATTE
+===================== */
+
+.why-sheilatte {
+    padding: 100px 0;
+    background: #faf7f3;
+}
+
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 50px;
+}
+
+
+.why-card {
+    padding: 35px 30px;
+    background: #fff;
+    border-radius: 20px;
+    text-align: center;
+
+    box-shadow: 0 12px 35px rgba(70, 43, 35, 0.08);
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.why-card:hover {
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 20px 45px rgba(70, 43, 35, 0.15);
+}
+
+
+.why-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(196, 139, 87, 0.12);
+
+    color: #c48b57;
+
+    font-size: 25px;
+
+    transition: transform 0.4s ease;
+}
+
+
+.why-card:hover .why-icon {
+    transform: rotate(8deg) scale(1.1);
+}
+
+
+.why-card h3 {
+    margin-bottom: 12px;
+    color: #5b3a31;
+}
+
+
+.why-card p {
+    line-height: 1.8;
+    color: #777;
+}
+
+
+/* =====================
+   VALUES
+===================== */
+
+.values {
+    padding: 100px 0;
+}
+
+
+.values-grid {
+    max-width: 900px;
+    margin: 50px auto 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+.value-item {
+    padding: 25px;
+
+    border: 1px solid rgba(91, 58, 49, 0.1);
+    border-radius: 16px;
+
+    display: flex;
+    gap: 18px;
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.value-item:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 15px 35px rgba(70, 43, 35, 0.1);
+}
+
+
+.value-number {
+    font-size: 24px;
+    font-weight: 800;
+    color: #c48b57;
+}
+
+
+.value-item h3 {
+    margin-bottom: 8px;
+    color: #5b3a31;
+}
+
+
+.value-item p {
+    margin: 0;
+    line-height: 1.7;
+    color: #777;
+}
+
+
+/* =====================
+   ABOUT ANIMATION
+===================== */
+
+.about-image {
+    animation: aboutFloat 5s ease-in-out infinite;
+}
+
+
+@keyframes aboutFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+
+}
+
+
+.about-image:hover {
+    animation-play-state: paused;
+}
+
+
+.about-image img {
+    transition:
+        transform 0.6s ease,
+        box-shadow 0.6s ease;
+}
+
+
+.about-image:hover img {
+    transform: scale(1.035) rotate(1deg);
+}
+
+
+/* =====================
+   IMAGE DECORATION
+===================== */
+
+.about-image-decoration {
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+
+.decoration-one {
+    width: 120px;
+    height: 120px;
+
+    top: -35px;
+    left: -35px;
+
+    background: rgba(196, 139, 87, 0.15);
+
+    animation:
+        decorationFloatOne 6s ease-in-out infinite;
+}
+
+
+.decoration-two {
+    width: 80px;
+    height: 80px;
+
+    right: -25px;
+    bottom: -25px;
+
+    background: rgba(91, 58, 49, 0.12);
+
+    animation:
+        decorationFloatTwo 5s ease-in-out infinite;
+}
+
+
+@keyframes decorationFloatOne {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(8px, -12px);
+    }
+
+}
+
+
+@keyframes decorationFloatTwo {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-8px, 10px);
+    }
+
+}
+
+
+/* =====================
+   ABOUT BADGE
+===================== */
+
+.about-image-badge {
+    animation:
+        badgeFloat 4s ease-in-out infinite;
+}
+
+
+@keyframes badgeFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+
+}
+
+
+/* =====================
+   ABOUT HIGHLIGHT
+===================== */
+
+.about-highlight {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 25px !important;
+
+    padding: 15px 18px;
+
+    border-left: 4px solid #c48b57;
+
+    background: rgba(196, 139, 87, 0.08);
+
+    border-radius: 0 12px 12px 0;
+
+    font-weight: 600;
+    color: #5b3a31;
+}
+
+
+.about-highlight i {
+    color: #c48b57;
+}
+
+
+/* =====================
+   RESPONSIVE
+===================== */
+
+@media (max-width: 900px) {
+
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .why-sheilatte,
+    .values {
+        padding: 70px 0;
+    }
+
+    .about-image-badge {
+        right: 10px;
+        bottom: 15px;
+    }
+
+}
