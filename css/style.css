@@ -2021,7 +2021,7 @@ body{
 
     .contact-submit {
         grid-column: auto;
-        width: 100%;
+        width: fit-content;
     }
 
     .form-message {
