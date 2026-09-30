@@ -642,22 +642,50 @@ renderProducts();
 // =====================
 // Button Ripple
 // =====================
+
 document.addEventListener("click", (event) => {
-    const button = event.target.closest(".btn,.card button,.filter-btn,.modal-close");
+
+    const button = event.target.closest(
+        ".btn, .card button, .filter-btn, .modal-close"
+    );
+
     if (!button) return;
 
+    // Jangan beri ripple pada tombol submit/form
+    if (button.type === "submit") return;
+
+    const oldRipple = button.querySelector(".ripple");
+
+    if (oldRipple) {
+        oldRipple.remove();
+    }
+
     const circle = document.createElement("span");
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    circle.className = "ripple";
+
     const rect = button.getBoundingClientRect();
+
+    const diameter = Math.max(
+        button.clientWidth,
+        button.clientHeight
+    );
 
     circle.style.width = `${diameter}px`;
     circle.style.height = `${diameter}px`;
-    circle.style.left = `${event.clientX - rect.left - diameter / 2}px`;
-    circle.style.top = `${event.clientY - rect.top - diameter / 2}px`;
-    circle.classList.add("ripple");
-    button.querySelector(".ripple")?.remove();
+
+    circle.style.left =
+        `${event.clientX - rect.left - diameter / 2}px`;
+
+    circle.style.top =
+        `${event.clientY - rect.top - diameter / 2}px`;
+
     button.appendChild(circle);
+
+    setTimeout(() => {
+        circle.remove();
+    }, 600);
 });
+
 
 // =====================
 // Coffee Cursor Trail
