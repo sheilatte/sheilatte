@@ -7,10 +7,13 @@
 // IMAGE PATH
 // =====================
 
-const isMenuPage = window.location.pathname.includes("/menu/");
+
+const path = window.location.pathname;
+
+const isNestedPage = /\/(menu|tentang|kontak)\/?$/.test(path);
 
 const imagePath = (filename) => {
-    return `${isMenuPage ? "../" : ""}assets/images/${filename}`;
+    return `${isNestedPage ? "../" : ""}assets/images/${filename}`;
 };
 
 // =====================
