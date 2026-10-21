@@ -7,12 +7,10 @@
 // IMAGE PATH
 // =====================
 
-const path = window.location.pathname;
-
-const isNestedPage = /\/(menu|tentang|kontak)\/?$/.test(path);
+const isMenuPage = window.location.pathname.includes("/menu/");
 
 const imagePath = (filename) => {
-    return `${isNestedPage ? "../" : ""}assets/images/${filename}`;
+    return `${isMenuPage ? "../" : ""}assets/images/${filename}`;
 };
 
 // =====================
@@ -496,13 +494,7 @@ function productCardTemplate(product, index) {
     return `
         <article class="card product-card" style="animation-delay:${index * 45}ms">
             <div class="product-image-wrap">
-                
-<img
-    src="${product.image}"
-    alt="${product.name}"
-    onerror="this.onerror=null;this.src='${imagePath("sheilatte.webp")}';"
->
-
+                <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='assets/images/sheilatte.webp';">
             </div>
             <span class="category-badge">${product.category}</span>
             <h3>${product.name}</h3>
@@ -523,43 +515,7 @@ function productCardTemplate(product, index) {
         </article>`;
 }
 
-
 function renderProducts(category = activeFilter) {
-    if (!productGrid) return;
-
-    activeFilter = category;
-
-    // Halaman dengan filter kategori menampilkan semua menu.
-    // Halaman Home tanpa filter tetap menampilkan Best Seller.
-    const showAllProducts =
-        document.querySelector(".menu-filters") !== null;
-
-    let visibleProducts;
-
-    if (showAllProducts) {
-        visibleProducts =
-            category === "Semua"
-                ? products
-                : products.filter(
-                    (product) => product.category === category
-                );
-    } else {
-        visibleProducts = products.filter(
-            (product) => product.bestSeller === true
-        );
-    }
-
-    productGrid.innerHTML = visibleProducts
-        .map(productCardTemplate)
-        .join("");
-
-    observeReveal(
-        productGrid.querySelectorAll(".product-card")
-    );
-
-    bindDetailButtons();
-}
-
 
     if (!productGrid) return;
 
