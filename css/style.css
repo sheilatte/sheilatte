@@ -97,6 +97,13 @@ section{
     color:var(--secondary);
 }
 
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    display: block;
+}
+
 .nav-menu{
     display:flex;
     gap:35px;
