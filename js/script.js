@@ -496,7 +496,13 @@ function productCardTemplate(product, index) {
     return `
         <article class="card product-card" style="animation-delay:${index * 45}ms">
             <div class="product-image-wrap">
-                <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='assets/images/sheilatte.webp';">
+                
+<img
+    src="${product.image}"
+    alt="${product.name}"
+    onerror="this.onerror=null;this.src='${imagePath("sheilatte.webp")}';"
+>
+
             </div>
             <span class="category-badge">${product.category}</span>
             <h3>${product.name}</h3>
