@@ -7,10 +7,12 @@
 // IMAGE PATH
 // =====================
 
-const isMenuPage = window.location.pathname.includes("/menu/");
+const path = window.location.pathname;
+
+const isNestedPage = /\/(menu|tentang|kontak)\/?$/.test(path);
 
 const imagePath = (filename) => {
-    return `${isMenuPage ? "../" : ""}assets/images/${filename}`;
+    return `${isNestedPage ? "../" : ""}assets/images/${filename}`;
 };
 
 // =====================
@@ -515,7 +517,43 @@ function productCardTemplate(product, index) {
         </article>`;
 }
 
+
 function renderProducts(category = activeFilter) {
+    if (!productGrid) return;
+
+    activeFilter = category;
+
+    // Halaman dengan filter kategori menampilkan semua menu.
+    // Halaman Home tanpa filter tetap menampilkan Best Seller.
+    const showAllProducts =
+        document.querySelector(".menu-filters") !== null;
+
+    let visibleProducts;
+
+    if (showAllProducts) {
+        visibleProducts =
+            category === "Semua"
+                ? products
+                : products.filter(
+                    (product) => product.category === category
+                );
+    } else {
+        visibleProducts = products.filter(
+            (product) => product.bestSeller === true
+        );
+    }
+
+    productGrid.innerHTML = visibleProducts
+        .map(productCardTemplate)
+        .join("");
+
+    observeReveal(
+        productGrid.querySelectorAll(".product-card")
+    );
+
+    bindDetailButtons();
+}
+
 
     if (!productGrid) return;
 
