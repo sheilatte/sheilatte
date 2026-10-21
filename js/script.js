@@ -518,91 +518,41 @@ function productCardTemplate(product, index) {
         </article>`;
 }
 
-function renderProducts(category = activeFilter) {
 
+function renderProducts(category = activeFilter) {
     if (!productGrid) return;
 
     activeFilter = category;
 
-
-    // =========================================
-    // CEK HALAMAN
-    // =========================================
-
-    const isMenuPage =
-        window.location.pathname.includes("/menu/");
-
-
-    // =========================================
-    // TENTUKAN PRODUK YANG AKAN DITAMPILKAN
-    // =========================================
+    // Halaman Menu dan Tentang menampilkan semua produk.
+    // Halaman Beranda tetap menampilkan Best Seller.
+    const showAllProducts =
+        document.querySelector(".menu-filters") !== null;
 
     let visibleProducts;
 
-
-    if (isMenuPage) {
-
-        /*
-         * HALAMAN MENU
-         *
-         * Menampilkan SEMUA produk.
-         * Filter kategori tetap berlaku.
-         */
-
+    if (showAllProducts) {
         visibleProducts =
             category === "Semua"
-
                 ? products
-
                 : products.filter(
-                    (product) =>
-                        product.category === category
+                    (product) => product.category === category
                 );
-
     } else {
-
-        /*
-         * HALAMAN HOME
-         *
-         * Hanya menampilkan Best Seller.
-         */
-
-        visibleProducts =
-            products.filter(
-                (product) =>
-                    product.bestSeller === true
-            );
-
+        visibleProducts = products.filter(
+            (product) => product.bestSeller === true
+        );
     }
 
-
-    // =========================================
-    // TAMPILKAN PRODUK
-    // =========================================
-
-    productGrid.innerHTML =
-        visibleProducts
-            .map(productCardTemplate)
-            .join("");
-
-
-    // =========================================
-    // ANIMASI
-    // =========================================
+    productGrid.innerHTML = visibleProducts
+        .map(productCardTemplate)
+        .join("");
 
     observeReveal(
-        productGrid.querySelectorAll(
-            ".product-card"
-        )
+        productGrid.querySelectorAll(".product-card")
     );
 
-
-    // =========================================
-    // DETAIL BUTTON
-    // =========================================
-
     bindDetailButtons();
-
 }
 function detailList(items) {
     return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
