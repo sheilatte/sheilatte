@@ -523,7 +523,30 @@ function getItemPrice(item) {
 
 
 
+
 function productCardTemplate(product, index) {
+    const isMenuPage = /\/menu\/?$/.test(window.location.pathname);
+
+    const actionButton = isMenuPage
+        ? `
+            <button
+                class="add-to-cart-btn"
+                type="button"
+                data-product-id="${product.id}">
+                <i class="fas fa-cart-plus"></i>
+                Tambah ke Keranjang
+            </button>
+        `
+        : `
+            <button
+                class="detail-btn"
+                type="button"
+                data-product-id="${product.id}">
+                <i class="fas fa-eye"></i>
+                Lihat Detail
+            </button>
+        `;
+
     return `
         <article class="card product-card"
             style="animation-delay:${index * 45}ms">
@@ -537,21 +560,11 @@ function productCardTemplate(product, index) {
             </div>
 
             <span class="category-badge">${product.category}</span>
-
             <h3>${product.name}</h3>
-
             <p>${product.description}</p>
-
             <span class="price">${product.price}</span>
 
-            <button
-                class="add-to-cart-btn"
-                type="button"
-                data-product-id="${product.id}">
-                <i class="fas fa-cart-plus"></i>
-                Tambah ke Keranjang
-            </button>
-
+            ${actionButton}
         </article>
     `;
 }
@@ -573,13 +586,21 @@ function renderProducts(category = activeFilter) {
         )
         : products.filter((product) => product.bestSeller === true);
 
-    productGrid.innerHTML = visibleProducts
-        .map(productCardTemplate)
-        .join("");
+    
+productGrid.innerHTML = visibleProducts
+    .map(productCardTemplate)
+    .join("");
 
-    observeReveal(productGrid.querySelectorAll(".product-card"));
+observeReveal(productGrid.querySelectorAll(".product-card"));
+
+const isMenuPage = /\/menu\/?$/.test(window.location.pathname);
+
+if (isMenuPage) {
     bindAddToCartButtons();
+} else {
+    bindDetailButtons();
 }
+
 
 function bindAddToCartButtons() {
     document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
