@@ -489,94 +489,421 @@ const products = [
   } 
 ];
 
+
 const productGrid = document.getElementById("productGrid");
 const filterButtons = document.querySelectorAll(".filter-btn");
 let activeFilter = "Semua";
 
-function productCardTemplate(product, index) {
-    return `
-        <article class="card product-card" style="animation-delay:${index * 45}ms">
-            <div class="product-image-wrap">
-                <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src='assets/images/sheilatte.webp';">
-            </div>
-            <span class="category-badge">${product.category}</span>
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <span class="price">${product.price}</span>
-            <button class="detail-btn" type="button" aria-expanded="false">Lihat Detail</button>
-            <div class="detail-content">
-                <h4>Tentang ${product.name}</h4>
-                <p>${product.details}</p>
-                <h4>Komposisi</h4>
-                ${detailList(product.ingredients)}
-                <h4>Karakter Rasa</h4>
-                <p>${product.taste}</p>
-                <h4>Rekomendasi Penyajian</h4>
-                <p>${product.serving}</p>
-                <button class="detail-btn close-detail-btn" type="button">Tutup Detail</button>
-            </div>
-        </article>`;
+const CART_KEY = "sheilatteCart";
+const OAT_SIDE_PRICE = 5000;
+
+let cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+let selectedProduct = null;
+
+function saveCart() {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    renderCart();
 }
 
+function formatRupiah(amount) {
+    return new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0
+    }).format(amount);
+}
+
+function parsePrice(price) {
+    return Number(String(price).replace(/[^\d]/g, "")) || 0;
+}
+
+function getItemPrice(item) {
+    return item.price + (item.milk === "Oat Side" ? OAT_SIDE_PRICE : 0);
+}
 
 function renderProducts(category = activeFilter) {
     if (!productGrid) return;
 
     activeFilter = category;
 
-    // Halaman Menu dan Tentang menampilkan semua produk.
-    // Halaman Beranda tetap menampilkan Best Seller.
     const showAllProducts =
         document.querySelector(".menu-filters") !== null;
 
-    let visibleProducts;
-
-    if (showAllProducts) {
-        visibleProducts =
+    const visibleProducts = showAllProducts
+        ? (
             category === "Semua"
                 ? products
-                : products.filter(
-                    (product) => product.category === category
-                );
-    } else {
-        visibleProducts = products.filter(
-            (product) => product.bestSeller === true
-        );
-    }
+                : products.filter((product) => product.category === category)
+        )
+        : products.filter((product) => product.bestSeller === true);
 
     productGrid.innerHTML = visibleProducts
         .map(productCardTemplate)
         .join("");
 
-    observeReveal(
-        productGrid.querySelectorAll(".product-card")
-    );
-
-    bindDetailButtons();
-}
-function detailList(items) {
-    return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+    observeReveal(productGrid.querySelectorAll(".product-card"));
+    bindAddToCartButtons();
 }
 
-function bindDetailButtons() {
-    productGrid.querySelectorAll(".detail-btn").forEach((button) => {
-        button.addEventListener("click", function () {
-            const card = this.closest(".card");
-            const detail = card.querySelector(".detail-content");
-            const isCloseButton = this.classList.contains("close-detail-btn");
-            const isOpen = isCloseButton
-                ? false
-                : detail.classList.toggle("active-detail");
+function bindAddToCartButtons() {
+    document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+            const product = products.find(
+                (item) => item.id === Number(button.dataset.productId)
+            );
 
-            if (isCloseButton) detail.classList.remove("active-detail");
-
-            const openButton = card.querySelector(".detail-btn:not(.close-detail-btn)");
-            openButton.hidden = isOpen;
-            openButton.textContent = "Lihat Detail";
-            openButton.setAttribute("aria-expanded", String(isOpen));
+            if (product) openCustomization(product);
         });
     });
 }
+
+// Membuat modal pemilihan modifikasi
+const customizationModal = document.createElement("div");
+customizationModal.id = "customizationModal";
+customizationModal.className = "order-modal";
+customizationModal.hidden = true;
+
+customizationModal.innerHTML = `
+    <div class="order-modal-box" role="dialog"
+        aria-modal="true" aria-labelledby="orderModalTitle">
+
+        <button class="modal-close" type="button"
+            aria-label="Tutup">&times;</button>
+
+        <h2 id="orderModalTitle">Sesuaikan Pesanan</h2>
+        <p id="customProductDescription"></p>
+
+        <form id="customizationForm">
+            <div id="sugarOptions" class="option-group">
+                <label for="sugarChoice">Tingkat gula</label>
+                <select id="sugarChoice">
+                    <option value="Normal Sugar">Normal Sugar</option>
+                    <option value="Less Sugar">Less Sugar</option>
+                    <option value="No Sugar">No Sugar</option>
+                </select>
+            </div>
+
+            <div id="iceOptions" class="option-group">
+                <label for="iceChoice">Pilihan es</label>
+                <select id="iceChoice">
+                    <option value="Normal Ice">Normal Ice</option>
+                    <option value="Less Ice">Less Ice</option>
+                    <option value="No Ice">No Ice</option>
+                </select>
+            </div>
+
+            <div id="blendOptions" class="option-group">
+                <label for="blendChoice">Penyajian</label>
+                <select id="blendChoice">
+                    <option value="Regular">Regular</option>
+                    <option value="Blend">Blend</option>
+                </select>
+            </div>
+
+            <div id="milkOptions" class="option-group">
+                <label for="milkChoice">Pilihan susu</label>
+                <select id="milkChoice">
+                    <option value="Regular Milk">Regular Milk</option>
+                    <option value="Oat Side">Oat Side (+Rp5.000)</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="orderQuantity">Jumlah</label>
+                <input id="orderQuantity" type="number"
+                    min="1" max="99" value="1" required>
+            </div>
+
+            <p id="customPrice" class="custom-price"></p>
+
+            <button class="btn add-confirm-btn" type="submit">
+                Masukkan ke Keranjang
+            </button>
+        </form>
+    </div>
+`;
+
+document.body.appendChild(customizationModal);
+
+const customizationForm =
+    document.getElementById("customizationForm");
+
+function openCustomization(product) {
+    selectedProduct = product;
+
+    document.getElementById("orderModalTitle").textContent = product.name;
+    document.getElementById("customProductDescription").textContent =
+        product.description;
+
+    const isDrink = ["Kopi", "Non-Kopi", "Tea"].includes(product.category);
+    const isCoffee = product.category === "Kopi";
+    const isTea = product.category === "Tea";
+
+    document.getElementById("sugarOptions").hidden = !isDrink;
+    document.getElementById("iceOptions").hidden = !isDrink;
+    document.getElementById("blendOptions").hidden = !isCoffee;
+    document.getElementById("milkOptions").hidden = !isCoffee && !isTea && !isDrink;
+
+    // Reset pilihan setiap kali produk baru dipilih.
+    customizationForm.reset();
+
+    document.getElementById("customPrice").textContent =
+        `Harga: ${formatRupiah(parsePrice(product.price))}`;
+
+    customizationModal.hidden = false;
+    document.body.classList.add("modal-open");
+}
+
+function closeCustomization() {
+    customizationModal.hidden = true;
+    document.body.classList.remove("modal-open");
+    selectedProduct = null;
+}
+
+customizationModal.querySelector(".modal-close")
+    .addEventListener("click", closeCustomization);
+
+customizationModal.addEventListener("click", (event) => {
+    if (event.target === customizationModal) closeCustomization();
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !customizationModal.hidden) {
+        closeCustomization();
+    }
+});
+
+document.getElementById("milkChoice").addEventListener("change", () => {
+    if (!selectedProduct) return;
+
+    const basePrice = parsePrice(selectedProduct.price);
+    const extra = document.getElementById("milkChoice").value === "Oat Side"
+        ? OAT_SIDE_PRICE
+        : 0;
+
+    document.getElementById("customPrice").textContent =
+        `Harga per item: ${formatRupiah(basePrice + extra)}`;
+});
+
+customizationForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!selectedProduct) return;
+
+    const quantity = Math.min(
+        99,
+        Math.max(1, Number(document.getElementById("orderQuantity").value) || 1)
+    );
+
+    const isDrink = ["Kopi", "Non-Kopi", "Tea"].includes(selectedProduct.category);
+    const isCoffee = selectedProduct.category === "Kopi";
+
+    const options = {
+        sugar: isDrink
+            ? document.getElementById("sugarChoice").value
+            : "-",
+        ice: isDrink
+            ? document.getElementById("iceChoice").value
+            : "-",
+        serving: isCoffee
+            ? document.getElementById("blendChoice").value
+            : "Regular",
+        milk: isDrink
+            ? document.getElementById("milkChoice").value
+            : "-",
+    };
+
+    const itemKey = [
+        selectedProduct.id,
+        options.sugar,
+        options.ice,
+        options.serving,
+        options.milk
+    ].join("|");
+
+    const existing = cart.find((item) => item.key === itemKey);
+
+    if (existing) {
+        existing.quantity = Math.min(99, existing.quantity + quantity);
+    } else {
+        cart.push({
+            key: itemKey,
+            id: selectedProduct.id,
+            name: selectedProduct.name,
+            image: selectedProduct.image,
+            price: parsePrice(selectedProduct.price),
+            quantity,
+            ...options
+        });
+    }
+
+    saveCart();
+    closeCustomization();
+    showCartMessage(`${selectedProduct.name} ditambahkan ke keranjang.`);
+});
+
+// Membuat keranjang mengambang di kanan bawah
+const cartWidget = document.createElement("aside");
+cartWidget.id = "cartWidget";
+cartWidget.className = "cart-widget";
+
+cartWidget.innerHTML = `
+    <button id="cartToggle" class="cart-toggle" type="button"
+        aria-expanded="false">
+        <i class="fas fa-shopping-cart"></i>
+        Keranjang (<span id="cartCount">0</span>)
+        <span id="cartTotalShort"></span>
+    </button>
+
+    <div id="cartPanel" class="cart-panel" hidden>
+        <div class="cart-panel-heading">
+            <h2>Keranjang Saya</h2>
+            <button id="cartClose" type="button" aria-label="Tutup keranjang">
+                &times;
+            </button>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="cart-total-row">
+            <span>Total</span>
+            <strong id="cartTotal">Rp0</strong>
+        </div>
+
+        <button id="checkoutButton" class="btn checkout-btn" type="button">
+            Lanjut ke Pembayaran
+        </button>
+    </div>
+`;
+
+document.body.appendChild(cartWidget);
+
+function showCartMessage(message) {
+    let notice = document.getElementById("cartNotice");
+
+    if (!notice) {
+        notice = document.createElement("div");
+        notice.id = "cartNotice";
+        notice.className = "cart-notice";
+        document.body.appendChild(notice);
+    }
+
+    notice.textContent = message;
+    notice.classList.add("visible");
+
+    window.clearTimeout(notice._timer);
+    notice._timer = window.setTimeout(() => {
+        notice.classList.remove("visible");
+    }, 2200);
+}
+
+function renderCart() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const total = cart.reduce(
+        (sum, item) => sum + getItemPrice(item) * item.quantity,
+        0
+    );
+
+    document.getElementById("cartCount").textContent = count;
+    document.getElementById("cartTotalShort").textContent =
+        formatRupiah(total);
+    document.getElementById("cartTotal").textContent = formatRupiah(total);
+
+    const cartItems = document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="empty-cart">Keranjang masih kosong.</p>';
+    } else {
+        cartItems.innerHTML = cart.map((item) => `
+            <article class="cart-item">
+                <div>
+                    <strong>${escapeHTML(item.name)}</strong>
+                    <small>${escapeHTML(item.sugar)} · ${escapeHTML(item.ice)}</small>
+                    <small>${escapeHTML(item.serving)} · ${escapeHTML(item.milk)}</small>
+                    <small>${formatRupiah(getItemPrice(item))} / item</small>
+                    <div class="quantity-controls">
+                        <button type="button" data-action="minus"
+                            data-key="${escapeHTML(item.key)}">−</button>
+                        <span>${item.quantity}</span>
+                        <button type="button" data-action="plus"
+                            data-key="${escapeHTML(item.key)}">+</button>
+                        <button type="button" data-action="remove"
+                            data-key="${escapeHTML(item.key)}">Hapus</button>
+                    </div>
+                </div>
+                <strong>${formatRupiah(getItemPrice(item) * item.quantity)}</strong>
+            </article>
+        `).join("");
+    }
+
+    document.getElementById("checkoutButton").disabled = cart.length === 0;
+}
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+document.getElementById("cartToggle").addEventListener("click", () => {
+    const panel = document.getElementById("cartPanel");
+    panel.hidden = !panel.hidden;
+
+    document.getElementById("cartToggle").setAttribute(
+        "aria-expanded",
+        String(!panel.hidden)
+    );
+});
+
+document.getElementById("cartClose").addEventListener("click", () => {
+    document.getElementById("cartPanel").hidden = true;
+    document.getElementById("cartToggle").setAttribute("aria-expanded", "false");
+});
+
+document.getElementById("cartItems").addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+
+    const item = cart.find((entry) => entry.key === button.dataset.key);
+    if (!item) return;
+
+    if (button.dataset.action === "plus") item.quantity++;
+    if (button.dataset.action === "minus") item.quantity--;
+    if (button.dataset.action === "remove") {
+        cart = cart.filter((entry) => entry.key !== item.key);
+    }
+
+    cart = cart.filter((entry) => entry.quantity > 0);
+    saveCart();
+});
+
+document.getElementById("checkoutButton").addEventListener("click", () => {
+    if (cart.length === 0) return;
+    window.location.href = "../pembayaran/";
+});
+
+filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const selectedFilter = button.dataset.filter;
+        if (selectedFilter === activeFilter) return;
+
+        filterButtons.forEach((filterButton) => {
+            filterButton.classList.toggle(
+                "active",
+                filterButton === button
+            );
+        });
+
+        renderProducts(selectedFilter);
+    });
+});
+
+renderProducts();
+renderCart();
+
 
 filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
