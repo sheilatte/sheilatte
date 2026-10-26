@@ -521,6 +521,42 @@ function getItemPrice(item) {
     return item.price + (item.milk === "Oat Side" ? OAT_SIDE_PRICE : 0);
 }
 
+
+
+function productCardTemplate(product, index) {
+    return `
+        <article class="card product-card"
+            style="animation-delay:${index * 45}ms">
+
+            <div class="product-image-wrap">
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    onerror="this.onerror=null;this.src='${imagePath("sheilatte.webp")}';"
+                >
+            </div>
+
+            <span class="category-badge">${product.category}</span>
+
+            <h3>${product.name}</h3>
+
+            <p>${product.description}</p>
+
+            <span class="price">${product.price}</span>
+
+            <button
+                class="add-to-cart-btn"
+                type="button"
+                data-product-id="${product.id}">
+                <i class="fas fa-cart-plus"></i>
+                Tambah ke Keranjang
+            </button>
+
+        </article>
+    `;
+}
+
+
 function renderProducts(category = activeFilter) {
     if (!productGrid) return;
 
