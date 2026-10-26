@@ -2047,3 +2047,263 @@ body{
     }
 
 }
+
+
+
+
+/* =========================
+   SHEILATTE ORDERING SYSTEM
+========================= */
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #50352e;
+    color: #fff;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+
+.add-to-cart-btn:hover {
+    background: #8b5e3c;
+    transform: translateY(-2px);
+}
+
+.order-modal[hidden],
+.cart-panel[hidden] {
+    display: none !important;
+}
+
+.order-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(35, 24, 20, .65);
+    overflow-y: auto;
+}
+
+.order-modal-box {
+    position: relative;
+    width: min(100%, 440px);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    border-radius: 18px;
+    background: #fffaf5;
+    color: #50352e;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+}
+
+.order-modal-box h2 {
+    margin: 0 35px 8px 0;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    color: #50352e;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 18px 0;
+}
+
+.option-group label {
+    font-weight: 600;
+}
+
+.option-group select,
+.option-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dfd0c5;
+    border-radius: 8px;
+    background: #fff;
+    color: #50352e;
+    font: inherit;
+}
+
+.custom-price {
+    font-weight: 700;
+    color: #b77945;
+}
+
+.add-confirm-btn,
+.checkout-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #50352e;
+    color: white;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.checkout-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.cart-widget {
+    position: fixed;
+    z-index: 9000;
+    right: 22px;
+    bottom: 22px;
+    width: min(390px, calc(100vw - 28px));
+    font-family: inherit;
+}
+
+.cart-toggle {
+    display: block;
+    margin-left: auto;
+    max-width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 30px;
+    background: #50352e;
+    color: white;
+    font: inherit;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(45, 25, 18, .25);
+    cursor: pointer;
+}
+
+.cart-panel {
+    margin-bottom: 12px;
+    padding: 18px;
+    border: 1px solid #eaded3;
+    border-radius: 16px;
+    background: #fffaf5;
+    color: #50352e;
+    box-shadow: 0 10px 35px rgba(45, 25, 18, .2);
+}
+
+.cart-panel-heading,
+.cart-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.cart-panel-heading h2 {
+    font-size: 20px;
+}
+
+#cartClose {
+    border: none;
+    background: transparent;
+    color: #50352e;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+#cartItems {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #eaded3;
+}
+
+.cart-item > div {
+    min-width: 0;
+}
+
+.cart-item small {
+    display: block;
+    margin-top: 4px;
+    color: #806f66;
+    overflow-wrap: anywhere;
+}
+
+.cart-item > strong {
+    flex-shrink: 0;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.quantity-controls button {
+    padding: 5px 9px;
+    border: 1px solid #dfd0c5;
+    border-radius: 6px;
+    background: white;
+    color: #50352e;
+    cursor: pointer;
+}
+
+.cart-total-row {
+    padding: 18px 0;
+    font-size: 17px;
+}
+
+.empty-cart {
+    padding: 18px 0;
+    color: #806f66;
+}
+
+.cart-notice {
+    position: fixed;
+    z-index: 11000;
+    right: 22px;
+    bottom: 92px;
+    max-width: calc(100vw - 44px);
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: #50352e;
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: .2s ease;
+}
+
+.cart-notice.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 480px) {
+    .cart-widget {
+        right: 14px;
+        bottom: 14px;
+        width: calc(100vw - 28px);
+    }
+
+    .order-modal-box {
+        padding: 22px 18px;
+    }
+}
