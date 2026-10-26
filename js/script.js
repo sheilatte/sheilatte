@@ -605,6 +605,71 @@ function renderProducts(category = activeFilter) {
 }
 
 
+function bindDetailButtons() {
+    document.querySelectorAll(".detail-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+            const product = products.find(
+                (item) => item.id === Number(button.dataset.productId)
+            );
+
+            if (!product) return;
+
+            const ingredients = Array.isArray(product.ingredients)
+                ? product.ingredients.join(", ")
+                : "-";
+
+            const detailContent = `
+                <div class="product-detail-content">
+                    <h2>${escapeHTML(product.name)}</h2>
+                    <p>${escapeHTML(product.details || product.description)}</p>
+                    <p><strong>Harga:</strong> ${escapeHTML(product.price)}</p>
+                    <p><strong>Bahan:</strong> ${escapeHTML(ingredients)}</p>
+                    <p><strong>Karakter rasa:</strong> ${escapeHTML(product.taste || "-")}</p>
+                    <p><strong>Saran penyajian:</strong> ${escapeHTML(product.serving || "-")}</p>
+                </div>
+            `;
+
+            let detailModal = document.getElementById("productDetailModal");
+
+            if (!detailModal) {
+                detailModal = document.createElement("div");
+                detailModal.id = "productDetailModal";
+                detailModal.className = "order-modal";
+
+                document.body.appendChild(detailModal);
+            }
+
+            detailModal.innerHTML = `
+                <div class="order-modal-box" role="dialog"
+                    aria-modal="true" aria-label="Detail produk">
+                    <button class="modal-close" type="button"
+                        aria-label="Tutup">&times;</button>
+                    ${detailContent}
+                </div>
+            `;
+
+            detailModal.hidden = false;
+            document.body.classList.add("modal-open");
+
+            detailModal.querySelector(".modal-close").addEventListener(
+                "click",
+                () => {
+                    detailModal.hidden = true;
+                    document.body.classList.remove("modal-open");
+                }
+            );
+
+            detailModal.onclick = (event) => {
+                if (event.target === detailModal) {
+                    detailModal.hidden = true;
+                    document.body.classList.remove("modal-open");
+                }
+            };
+        });
+    });
+}
+
+
 function bindAddToCartButtons() {
     document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
         button.addEventListener("click", () => {
