@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran | Sheilatte</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/png" href="../assets/images/sheilatte-logo.png">
+
+    <style>
+        .payment-page {
+            max-width: 760px;
+            margin: 50px auto;
+            padding: 24px;
+            color: #50352e;
+        }
+
+        .payment-card {
+            margin: 20px 0;
+            padding: 24px;
+            border: 1px solid #eaded3;
+            border-radius: 18px;
+            background: #fffaf5;
+            box-shadow: 0 8px 28px rgba(50, 30, 20, .08);
+        }
+
+        .payment-card h2 {
+            margin-top: 0;
+        }
+
+        .payment-total {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 0;
+            border-top: 1px solid #eaded3;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .payment-qr {
+            display: block;
+            width: min(100%, 300px);
+            margin: 20px auto;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .bank-number {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 12px 0;
+        }
+
+        .bank-number strong {
+            font-size: 22px;
+        }
+
+        .copy-button,
+        .payment-button,
+        .back-button {
+            display: inline-block;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            background: #50352e;
+            color: white;
+            text-decoration: none;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .payment-button {
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .payment-note {
+            color: #806f66;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eaded3;
+        }
+
+        @media (max-width: 480px) {
+            .payment-page {
+                margin: 20px auto;
+                padding: 16px;
+            }
+
+            .payment-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <nav class="navbar">
+            <a href="../index.html" class="logo">
+                ☕ <span>Sheilatte</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../tentang/">Tentang</a></li>
+                <li><a href="../menu/">Menu</a></li>
+                <li><a href="../kontak/">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="payment-page">
+        <h1>Pembayaran Sheilatte</h1>
+        <p>Periksa pesananmu sebelum melakukan pembayaran.</p>
+
+        <section class="payment-card">
+            <h2>Ringkasan Pesanan</h2>
+            <div id="paymentItems"></div>
+            <div class="payment-total">
+                <span>Total pembayaran</span>
+                <span id="paymentTotal">Rp0</span>
+            </div>
+        </section>
+
+        <section class="payment-card">
+            <h2>Bayar dengan QRIS</h2>
+            <p>Pindai QRIS berikut menggunakan aplikasi pembayaran yang mendukung QRIS.</p>
+
+            <img
+                class="payment-qr"
+                src="../assets/images/qris-sheilatte.png"
+                alt="QRIS pembayaran Sheilatte"
+                onerror="this.style.display='none';document.getElementById('qrError').hidden=false;"
+            >
+
+            <p id="qrError" class="payment-note" hidden>
+                Gambar QRIS belum ditemukan. Pastikan file bernama
+                qris-sheilatte.png ada di assets/images/.
+            </p>
+
+            <p class="payment-note">
+                Pastikan nama merchant dan nominal pembayaran sesuai sebelum mengonfirmasi.
+                Jika QRIS tidak mengisi nominal otomatis, masukkan total pembayaran yang tertera
+                dan periksa kembali sebelum membayar.
+            </p>
+        </section>
+
+        <section class="payment-card">
+            <h2>Transfer Bank</h2>
+            <p>Bank BCA</p>
+
+            <div class="bank-number">
+                <strong id="accountNumber">6666555</strong>
+                <button class="copy-button" id="copyAccount" type="button">
+                    Salin nomor
+                </button>
+            </div>
+
+            <p>Nama penerima: <strong>Sheilatte</strong></p>
+        </section>
+
+        <section class="payment-card">
+            <h2>Konfirmasi Pesanan</h2>
+            <p class="payment-note">
+                Setelah membayar, simpan bukti transaksi. Website ini belum memverifikasi
+                pembayaran secara otomatis. Silakan konfirmasi pesanan kepada pihak Sheilatte
+                melalui saluran kontak yang telah disediakan.
+            </p>
+
+            <button class="payment-button" id="confirmPayment" type="button">
+                Saya Sudah Membayar
+            </button>
+
+            <p id="paymentMessage" class="payment-note" aria-live="polite"></p>
+            <a href="../menu/" class="back-button">Kembali ke Menu</a>
+        </section>
+    </main>
+
+    <script>
+        const CART_KEY = "sheilatteCart";
+        const OAT_SIDE_PRICE = 5000;
+
+        let cart = [];
+
+        try {
+            cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+            if (!Array.isArray(cart)) cart = [];
+        } catch {
+            cart = [];
+        }
+
+        function rupiah(value) {
+            return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function safe(value) {
+            return String(value ?? "").replace(/[&<>"']/g, char => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            })[char]);
+        }
+
+        function itemPrice(item) {
+            return Number(item.price || 0) +
+                (item.milk === "Oat Side" ? OAT_SIDE_PRICE : 0);
+        }
+
+        const itemsElement = document.getElementById("paymentItems");
+        const totalElement = document.getElementById("paymentTotal");
+        const confirmButton = document.getElementById("confirmPayment");
+
+        const total = cart.reduce(
+            (sum, item) => sum + itemPrice(item) * Number(item.quantity || 0),
+            0
+        );
+
+        if (cart.length === 0) {
+            itemsElement.innerHTML =
+                "<p>Keranjang kosong. Silakan pilih menu terlebih dahulu.</p>";
+            confirmButton.disabled = true;
+        } else {
+            itemsElement.innerHTML = cart.map(item => `
+                <div class="payment-item">
+                    <div>
+                        <strong>${safe(item.name)} × ${Number(item.quantity)}</strong>
+                        <p class="payment-note">
+                            Gula: ${safe(item.sugar)}<br>
+                            Es: ${safe(item.ice)}<br>
+                            Penyajian: ${safe(item.serving)}<br>
+                            Susu: ${safe(item.milk)}
+                        </p>
+                    </div>
+                    <strong>${rupiah(itemPrice(item) * Number(item.quantity))}</strong>
+                </div>
+            `).join("");
+        }
+
+        totalElement.textContent = rupiah(total);
+
+        document.getElementById("copyAccount").addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText("6666555");
+                document.getElementById("copyAccount").textContent = "Tersalin!";
+            } catch {
+                alert("Silakan salin nomor rekening ini secara manual: 6666555");
+            }
+        });
+
+        confirmButton.addEventListener("click", () => {
+            if (!cart.length) return;
+
+            document.getElementById("paymentMessage").textContent =
+                "Terima kasih! Pesananmu belum otomatis dikirim ke Sheilatte. Simpan ringkasan pesanan dan bukti pembayaran, lalu hubungi Sheilatte untuk konfirmasi.";
+        });
+    </script>
+</body>
+</html>
