@@ -570,35 +570,38 @@ function productCardTemplate(product, index) {
 }
 
 
+
 function renderProducts(category = activeFilter) {
     if (!productGrid) return;
 
     activeFilter = category;
 
+    const isMenuPage = /\/menu\/?$/.test(window.location.pathname);
     const showAllProducts =
+        isMenuPage ||
         document.querySelector(".menu-filters") !== null;
 
     const visibleProducts = showAllProducts
         ? (
             category === "Semua"
                 ? products
-                : products.filter((product) => product.category === category)
+                : products.filter(
+                    (product) => product.category === category
+                )
         )
         : products.filter((product) => product.bestSeller === true);
 
-    
-productGrid.innerHTML = visibleProducts
-    .map(productCardTemplate)
-    .join("");
+    productGrid.innerHTML = visibleProducts
+        .map(productCardTemplate)
+        .join("");
 
-observeReveal(productGrid.querySelectorAll(".product-card"));
+    observeReveal(productGrid.querySelectorAll(".product-card"));
 
-const isMenuPage = /\/menu\/?$/.test(window.location.pathname);
-
-if (isMenuPage) {
-    bindAddToCartButtons();
-} else {
-    bindDetailButtons();
+    if (isMenuPage) {
+        bindAddToCartButtons();
+    } else {
+        bindDetailButtons();
+    }
 }
 
 
@@ -942,9 +945,11 @@ document.getElementById("checkoutButton").addEventListener("click", () => {
     window.location.href = "../pembayaran/";
 });
 
+
 filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const selectedFilter = button.dataset.filter;
+
         if (selectedFilter === activeFilter) return;
 
         filterButtons.forEach((filterButton) => {
@@ -960,21 +965,6 @@ filterButtons.forEach((button) => {
 
 renderProducts();
 renderCart();
-
-
-filterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        const selectedFilter = button.dataset.filter;
-        if (selectedFilter === activeFilter) return;
-
-        filterButtons.forEach((filterButton) => {
-            filterButton.classList.toggle("active", filterButton === button);
-        });
-        renderProducts(selectedFilter);
-    });
-});
-
-renderProducts();
 
 // =====================
 // Button Ripple
