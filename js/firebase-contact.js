@@ -1,11 +1,18 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {
-    getFirestore,
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
+  getFirestore,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  doc,
+  setDoc,
+  query,
+  where,
+  orderBy,
+  updateDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 const firebaseConfig = {
     apiKey: "AIzaSyCg3Xn45NlKZjcL5dJOV35NsrEkNSEWfmM",
     authDomain: "sheilatte.firebaseapp.com",
