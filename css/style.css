@@ -2344,3 +2344,303 @@ body.modal-open {
         font-size: 14px;
     }
 }
+
+
+
+/* =========================================
+   SHEILATTE - SIMPLE COFFEE ORDER UI
+   Style override: modal pilihan & keranjang
+   Tidak mengubah fungsi JavaScript
+========================================= */
+
+.order-modal {
+    padding: 18px;
+    background: rgba(35, 24, 20, .58);
+    backdrop-filter: blur(3px);
+}
+
+.order-modal-box {
+    width: min(100%, 460px);
+    max-height: min(88vh, 760px);
+    padding: 30px;
+    border: 1px solid #eaded3;
+    border-radius: 20px;
+    background: #fffaf5;
+    color: #50352e;
+    box-shadow: 0 22px 60px rgba(45, 25, 18, .22);
+}
+
+.order-modal-box h2 {
+    margin: 0 42px 7px 0;
+    color: #4e342e;
+    font-size: 23px;
+    line-height: 1.35;
+}
+
+#customProductDescription {
+    margin: 0 34px 22px 0;
+    color: #89776c;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.order-modal-box .modal-close {
+    top: 16px;
+    right: 17px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #f1e7dd;
+    color: #50352e;
+    font-size: 24px;
+    line-height: 1;
+    box-shadow: none;
+}
+
+.order-modal-box .modal-close:hover {
+    background: #e7d6c7;
+}
+
+.option-group {
+    gap: 9px;
+    margin: 17px 0;
+}
+
+.option-group label {
+    color: #60483d;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.option-group select,
+.option-group input {
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px solid #e4d7cc;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+    color: #50352e;
+    font: 14px 'Poppins', sans-serif;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.option-group select:focus,
+.option-group input:focus {
+    border-color: #a87552;
+    box-shadow: 0 0 0 3px rgba(168, 117, 82, .12);
+}
+
+.custom-price {
+    margin: 20px 0 15px;
+    padding: 13px 15px;
+    border: 1px solid #eaded3;
+    border-radius: 11px;
+    background: #f7efe7;
+    color: #754b35;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.add-confirm-btn,
+.checkout-btn {
+    min-height: 48px;
+    padding: 13px 18px;
+    border: 0;
+    border-radius: 11px;
+    background: #50352e;
+    color: #fffaf5;
+    font: 600 14px 'Poppins', sans-serif;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.add-confirm-btn:hover,
+.checkout-btn:hover:not(:disabled) {
+    background: #76513d;
+    transform: translateY(-1px);
+}
+
+/* Keranjang mengambang */
+.cart-widget {
+    width: min(390px, calc(100vw - 32px));
+    right: 20px;
+    bottom: 20px;
+}
+
+.cart-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 12px 19px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 999px;
+    background: #50352e;
+    color: #fffaf5;
+    font: 600 13px 'Poppins', sans-serif;
+    box-shadow: 0 8px 24px rgba(45, 25, 18, .2);
+    transition: background .2s ease, transform .2s ease;
+}
+
+.cart-toggle:hover {
+    background: #76513d;
+    transform: translateY(-2px);
+}
+
+#cartTotalShort {
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,.3);
+    font-size: 12px;
+    opacity: .9;
+}
+
+.cart-panel {
+    margin-bottom: 12px;
+    padding: 20px;
+    border: 1px solid #eaded3;
+    border-radius: 18px;
+    background: #fffaf5;
+    color: #50352e;
+    box-shadow: 0 16px 42px rgba(45, 25, 18, .18);
+}
+
+.cart-panel-heading {
+    padding-bottom: 13px;
+    border-bottom: 1px solid #eee3da;
+}
+
+.cart-panel-heading h2 {
+    color: #4e342e;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#cartClose {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f1e7dd;
+    font-size: 22px;
+    line-height: 1;
+}
+
+#cartClose:hover {
+    background: #e7d6c7;
+}
+
+#cartItems {
+    max-height: 320px;
+    padding: 3px 2px;
+}
+
+.cart-item {
+    align-items: flex-start;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee3da;
+}
+
+.cart-item strong {
+    color: #50352e;
+    font-size: 13px;
+}
+
+.cart-item small {
+    color: #89776c;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.quantity-controls {
+    gap: 7px;
+    margin-top: 11px;
+}
+
+.quantity-controls button {
+    min-width: 29px;
+    min-height: 29px;
+    padding: 4px 8px;
+    border: 1px solid #e4d7cc;
+    border-radius: 8px;
+    background: #fff;
+    color: #50352e;
+    font: 600 12px 'Poppins', sans-serif;
+}
+
+.quantity-controls button:hover {
+    border-color: #a87552;
+    background: #f7efe7;
+}
+
+.quantity-controls button[data-action="remove"] {
+    margin-left: 3px;
+    border-color: transparent;
+    background: transparent;
+    color: #a45e4c;
+}
+
+.cart-total-row {
+    margin-top: 8px;
+    padding: 16px 0;
+    border-top: 1px solid #eee3da;
+    color: #60483d;
+    font-size: 14px;
+}
+
+.cart-total-row strong {
+    color: #754b35;
+    font-size: 18px;
+}
+
+.empty-cart {
+    padding: 22px 8px;
+    color: #89776c;
+    font-size: 13px;
+    text-align: center;
+}
+
+.cart-notice {
+    right: 20px;
+    bottom: 88px;
+    padding: 12px 16px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 11px;
+    background: #50352e;
+    color: #fffaf5;
+    box-shadow: 0 8px 24px rgba(45, 25, 18, .18);
+    font-size: 13px;
+}
+
+@media (max-width: 480px) {
+    .order-modal {
+        align-items: center;
+        padding: 12px;
+    }
+
+    .order-modal-box {
+        width: 100%;
+        max-height: 90vh;
+        padding: 25px 19px 21px;
+        border-radius: 17px;
+    }
+
+    .order-modal-box h2 {
+        font-size: 20px;
+    }
+
+    .cart-widget {
+        right: 14px;
+        bottom: 14px;
+        width: calc(100vw - 28px);
+    }
+
+    .cart-panel {
+        padding: 16px;
+    }
+
+    .cart-notice {
+        right: 14px;
+        bottom: 78px;
+        max-width: calc(100vw - 28px);
+    }
+}
