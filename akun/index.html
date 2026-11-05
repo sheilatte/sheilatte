@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Akun Customer | Sheilatte</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .account-container {
+      max-width: 460px;
+      margin: 60px auto;
+      padding: 28px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.10);
+    }
+
+    .account-container h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .account-subtitle {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .account-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .account-tabs button {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .account-tabs button.active {
+      background: #70452d;
+      color: white;
+    }
+
+    .account-form input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      margin-bottom: 13px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .account-form button,
+    .logout-button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #70452d;
+      color: white;
+      cursor: pointer;
+    }
+
+    .account-form button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .account-message {
+      margin-top: 15px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .account-profile {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .account-profile h2 {
+      margin-bottom: 8px;
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="account-container">
+
+    <div id="accountSection">
+
+      <h1>Akun Sheilatte</h1>
+      <p class="account-subtitle">
+        Masuk atau daftar untuk mulai memesan.
+      </p>
+
+      <div class="account-tabs">
+        <button type="button" id="showLogin" class="active">
+          Login
+        </button>
+
+        <button type="button" id="showRegister">
+          Daftar
+        </button>
+      </div>
+
+      <!-- FORM LOGIN -->
+      <form id="loginForm" class="account-form">
+
+        <h2>Selamat Datang!</h2>
+
+        <input
+          type="email"
+          id="loginEmail"
+          placeholder="Alamat email"
+          autocomplete="email"
+          required
+        >
+
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Password"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit" id="loginButton">
+          Login
+        </button>
+
+      </form>
+
+      <!-- FORM DAFTAR -->
+      <form id="registerForm" class="account-form" hidden>
+
+        <h2>Buat Akun Baru</h2>
+
+        <input
+          type="text"
+          id="registerName"
+          placeholder="Nama lengkap"
+          autocomplete="name"
+          minlength="2"
+          maxlength="100"
+          required
+        >
+
+        <input
+          type="email"
+          id="registerEmail"
+          placeholder="Alamat email"
+          autocomplete="email"
+          required
+        >
+
+        <input
+          type="password"
+          id="registerPassword"
+          placeholder="Password minimal 6 karakter"
+          autocomplete="new-password"
+          minlength="6"
+          required
+        >
+
+        <button type="submit" id="registerButton">
+          Daftar Customer
+        </button>
+
+      </form>
+
+      <p id="accountMessage" class="account-message" role="status"></p>
+
+    </div>
+
+    <!-- PROFIL SETELAH LOGIN -->
+    <div id="profileSection" hidden>
+
+      <div class="account-profile">
+
+        <h1>Halo, <span id="profileName">Customer</span>!</h1>
+
+        <p>Selamat datang di Sheilatte.</p>
+
+        <p id="profileEmail"></p>
+
+        <p>Akun kamu sudah berhasil login.</p>
+
+        <button type="button" id="logoutButton" class="logout-button">
+          Logout
+        </button>
+
+      </div>
+
+    </div>
+
+    <a href="../index.html" class="back-home">
+      Kembali ke Beranda
+    </a>
+
+  </main>
+
+  <script type="module">
+
+    import {
+      auth,
+      db,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      updateProfile,
+      onAuthStateChanged,
+      doc,
+      setDoc,
+      serverTimestamp
+    } from "../js/firebase-contact.js";
+
+
+    // ELEMENT HTML
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    const showLogin = document.getElementById("showLogin");
+    const showRegister = document.getElementById("showRegister");
+
+    const accountMessage = document.getElementById("accountMessage");
+
+    const accountSection = document.getElementById("accountSection");
+    const profileSection = document.getElementById("profileSection");
+
+    const profileName = document.getElementById("profileName");
+    const profileEmail = document.getElementById("profileEmail");
+
+    const logoutButton = document.getElementById("logoutButton");
+
+
+    // PESAN
+    function showMessage(message, type = "") {
+      accountMessage.textContent = message;
+      accountMessage.style.color =
+        type === "error" ? "#c0392b" :
+        type === "success" ? "#218838" : "#555";
+    }
+
+
+    // GANTI TAB LOGIN / DAFTAR
+    showLogin.addEventListener("click", () => {
+
+      loginForm.hidden = false;
+      registerForm.hidden = true;
+
+      showLogin.classList.add("active");
+      showRegister.classList.remove("active");
+
+      showMessage("");
+
+    });
+
+
+    showRegister.addEventListener("click", () => {
+
+      loginForm.hidden = true;
+      registerForm.hidden = false;
+
+      showLogin.classList.remove("active");
+      showRegister.classList.add("active");
+
+      showMessage("");
+
+    });
+
+
+    // PESAN ERROR FIREBASE
+    function getErrorMessage(error) {
+
+      const errors = {
+        "auth/email-already-in-use":
+          "Email sudah terdaftar. Silakan login.",
+
+        "auth/invalid-email":
+          "Format email tidak valid.",
+
+        "auth/weak-password":
+          "Password terlalu lemah. Gunakan minimal 6 karakter.",
+
+        "auth/invalid-credential":
+          "Email atau password salah.",
+
+        "auth/user-not-found":
+          "Akun tidak ditemukan.",
+
+        "auth/wrong-password":
+          "Password yang kamu masukkan salah.",
+
+        "auth/network-request-failed":
+          "Koneksi internet bermasalah."
+      };
+
+      return errors[error.code] ||
+        "Terjadi kesalahan. Silakan coba lagi.";
+
+    }
+
+
+    // DAFTAR CUSTOMER
+    registerForm.addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const name =
+        document.getElementById("registerName").value.trim();
+
+      const email =
+        document.getElementById("registerEmail").value.trim();
+
+      const password =
+        document.getElementById("registerPassword").value;
+
+      const button =
+        document.getElementById("registerButton");
+
+      if (name.length < 2) {
+        showMessage("Nama minimal 2 karakter.", "error");
+        return;
+      }
+
+      try {
+
+        button.disabled = true;
+        button.textContent = "Membuat akun...";
+
+        showMessage("Sedang membuat akun...");
+
+        const credential =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+        await updateProfile(credential.user, {
+          displayName: name
+        });
+
+        await setDoc(
+          doc(db, "users", credential.user.uid),
+          {
+            name: name,
+            email: email,
+            role: "customer",
+            createdAt: serverTimestamp()
+          }
+        );
+
+        registerForm.reset();
+
+        showMessage(
+          "Pendaftaran berhasil! Selamat datang di Sheilatte.",
+          "success"
+        );
+
+      } catch (error) {
+
+        console.error("Register error:", error);
+
+        showMessage(getErrorMessage(error), "error");
+
+      } finally {
+
+        button.disabled = false;
+        button.textContent = "Daftar Customer";
+
+      }
+
+    });
+
+
+    // LOGIN CUSTOMER
+    loginForm.addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const email =
+        document.getElementById("loginEmail").value.trim();
+
+      const password =
+        document.getElementById("loginPassword").value;
+
+      const button =
+        document.getElementById("loginButton");
+
+      try {
+
+        button.disabled = true;
+        button.textContent = "Memproses...";
+
+        showMessage("Sedang login...");
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        loginForm.reset();
+
+        showMessage("Login berhasil!", "success");
+
+      } catch (error) {
+
+        console.error("Login error:", error);
+
+        showMessage(getErrorMessage(error), "error");
+
+      } finally {
+
+        button.disabled = false;
+        button.textContent = "Login";
+
+      }
+
+    });
+
+
+    // LOGOUT
+    logoutButton.addEventListener("click", async () => {
+
+      try {
+
+        await signOut(auth);
+
+        showMessage("Kamu sudah logout.", "success");
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage("Gagal logout. Silakan coba lagi.", "error");
+
+      }
+
+    });
+
+
+    // CEK STATUS LOGIN
+    onAuthStateChanged(auth, (user) => {
+
+      if (user) {
+
+        accountSection.hidden = true;
+        profileSection.hidden = false;
+
+        profileName.textContent =
+          user.displayName || "Customer";
+
+        profileEmail.textContent = user.email || "";
+
+      } else {
+
+        accountSection.hidden = false;
+        profileSection.hidden = true;
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
