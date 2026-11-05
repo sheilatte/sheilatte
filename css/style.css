@@ -2307,3 +2307,40 @@ body.modal-open {
         padding: 22px 18px;
     }
 }
+
+/* Tombol Akun Sheilatte */
+.account-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 11px 22px;
+    background-color: #75401f;
+    color: #fff8ef;
+    border: 1px solid #75401f;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.account-btn:hover {
+    background-color: #5b2f17;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 47, 23, 0.2);
+}
+
+.account-btn i {
+    font-size: 15px;
+}
+
+/* Tampilan mobile */
+@media (max-width: 768px) {
+    .account-btn {
+        padding: 9px 16px;
+        font-size: 14px;
+    }
+}
