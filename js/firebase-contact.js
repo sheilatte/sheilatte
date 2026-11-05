@@ -59,10 +59,11 @@ export {
   serverTimestamp
 };
 
+
 const form = document.getElementById("contactForm");
 const formMessage = document.getElementById("formMessage");
 
-if (form) {
+if (form && formMessage) {
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
@@ -74,7 +75,6 @@ if (form) {
         const subject = document.getElementById("subject").value;
         const message = document.getElementById("message").value.trim();
 
-        // Pastikan semua field terisi
         if (!nama || !email || !phone || !subject || !message) {
             formMessage.textContent = "Mohon isi semua kolom terlebih dahulu.";
             formMessage.className = "form-message error";
@@ -82,24 +82,22 @@ if (form) {
         }
 
         submitButton.disabled = true;
-        submitButton.innerHTML = `
-            <i class="fas fa-spinner fa-spin"></i>
-            Mengirim...
-        `;
+        submitButton.textContent = "Mengirim...";
 
         try {
             await addDoc(collection(db, "messages"), {
-                nama: nama,
-                email: email,
-                phone: phone,
-                subject: subject,
-                message: message,
+                nama,
+                email,
+                phone,
+                subject,
+                message,
                 createdAt: serverTimestamp()
             });
 
-            formMessage.textContent = "Pesan berhasil dikirim. Terima kasih sudah menghubungi Sheilatte!";
-            formMessage.className = "form-message success";
+            formMessage.textContent =
+                "Pesan berhasil dikirim. Terima kasih sudah menghubungi Sheilatte!";
 
+            formMessage.className = "form-message success";
             form.reset();
 
         } catch (error) {
@@ -107,15 +105,12 @@ if (form) {
 
             formMessage.textContent =
                 "Pesan gagal dikirim. Silakan coba lagi.";
+
             formMessage.className = "form-message error";
 
         } finally {
             submitButton.disabled = false;
-
-            submitButton.innerHTML = `
-                <i class="fas fa-paper-plane"></i>
-                Kirim Pesan
-            `;
+            submitButton.textContent = "Kirim Pesan";
         }
     });
 }
