@@ -1,4 +1,15 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 import {
   getFirestore,
   collection,
@@ -12,7 +23,7 @@ import {
   orderBy,
   updateDoc,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 const firebaseConfig = {
     apiKey: "AIzaSyCg3Xn45NlKZjcL5dJOV35NsrEkNSEWfmM",
     authDomain: "sheilatte.firebaseapp.com",
@@ -24,6 +35,29 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const auth = getAuth(app);
+
+export {
+  auth,
+  db,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  onAuthStateChanged,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  doc,
+  setDoc,
+  query,
+  where,
+  orderBy,
+  updateDoc,
+  serverTimestamp
+};
 
 const form = document.getElementById("contactForm");
 const formMessage = document.getElementById("formMessage");
