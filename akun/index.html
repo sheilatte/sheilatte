@@ -142,6 +142,11 @@
           required
         >
 
+        <button type="button" id="forgotPasswordBtn" class="forgot-password-btn">
+  Lupa Password?
+</button>
+
+<p id="resetMessage"></p>
         <button type="submit" id="loginButton">
           Login
         </button>
@@ -225,6 +230,7 @@
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
       signOut,
+      sendPasswordResetEmail
       updateProfile,
       onAuthStateChanged,
       doc,
