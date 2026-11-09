@@ -487,6 +487,33 @@
 
     });
 
+    const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
+const resetMessage = document.getElementById("resetMessage");
+
+forgotPasswordBtn.addEventListener("click", async () => {
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    resetMessage.textContent = "Masukkan email akun kamu terlebih dahulu.";
+    resetMessage.style.color = "red";
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+
+    resetMessage.textContent =
+      "Jika email terdaftar, tautan reset password akan dikirim. Silakan periksa kotak masuk atau spam.";
+    resetMessage.style.color = "green";
+
+  } catch (error) {
+    console.error(error);
+
+    resetMessage.textContent =
+      "Email reset belum dapat dikirim. Silakan coba lagi.";
+    resetMessage.style.color = "red";
+  }
+});
   </script>
 
 </body>
