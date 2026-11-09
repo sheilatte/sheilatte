@@ -2644,3 +2644,26 @@ body.modal-open {
         max-width: calc(100vw - 28px);
     }
 }
+
+
+.forgot-password-btn {
+  display: block;
+  width: auto !important;
+  margin: 0 0 15px auto;
+  padding: 5px 0 !important;
+  background: transparent !important;
+  color: #70452d !important;
+  border: none !important;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.forgot-password-btn:hover {
+  text-decoration: underline;
+}
+
+#resetMessage {
+  font-size: 13px;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
