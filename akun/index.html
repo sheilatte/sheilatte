@@ -230,13 +230,17 @@
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
       signOut,
-      sendPasswordResetEmail
+      sendPasswordResetEmail,
       updateProfile,
       onAuthStateChanged,
       doc,
       setDoc,
       serverTimestamp
     } from "../js/firebase-contact.js";
+
+    import {
+  sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
     // ELEMENT HTML
@@ -487,32 +491,53 @@
 
     });
 
-    const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
-const resetMessage = document.getElementById("resetMessage");
+   // LUPA PASSWORD
+const forgotPasswordBtn =
+  document.getElementById("forgotPasswordBtn");
+
+const resetMessage =
+  document.getElementById("resetMessage");
 
 forgotPasswordBtn.addEventListener("click", async () => {
-  const email = document.getElementById("email").value.trim();
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
 
   if (!email) {
-    resetMessage.textContent = "Masukkan email akun kamu terlebih dahulu.";
-    resetMessage.style.color = "red";
+    resetMessage.textContent =
+      "Masukkan email akun kamu terlebih dahulu.";
+
+    resetMessage.style.color = "#c0392b";
     return;
   }
 
   try {
+    forgotPasswordBtn.disabled = true;
+    forgotPasswordBtn.textContent = "Mengirim email...";
+
     await sendPasswordResetEmail(auth, email);
 
     resetMessage.textContent =
-      "Jika email terdaftar, tautan reset password akan dikirim. Silakan periksa kotak masuk atau spam.";
-    resetMessage.style.color = "green";
+      "Jika email terdaftar, tautan reset password akan dikirim. Periksa kotak masuk atau spam.";
+
+    resetMessage.style.color = "#218838";
 
   } catch (error) {
-    console.error(error);
+
+    console.error("Reset password error:", error);
 
     resetMessage.textContent =
-      "Email reset belum dapat dikirim. Silakan coba lagi.";
-    resetMessage.style.color = "red";
+      "Gagal mengirim email reset. Silakan coba lagi.";
+
+    resetMessage.style.color = "#c0392b";
+
+  } finally {
+
+    forgotPasswordBtn.disabled = false;
+    forgotPasswordBtn.textContent = "Lupa Password?";
+
   }
+
 });
   </script>
 
