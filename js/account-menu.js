@@ -3,7 +3,7 @@ import { updatePassword } from "https://www.gstatic.com/firebasejs/12.19.0/fireb
 
 
 // Navbar mobile pada halaman akun (halaman ini tidak memuat script.js).
-if (/\\/akun\\/?$/.test(window.location.pathname)) {
+if (/\/akun\/?$/.test(window.location.pathname)) {
   const mobileButton = document.querySelector(".menu-btn");
   const mobileMenu = document.querySelector(".nav-menu");
   if (mobileButton && mobileMenu) {
@@ -41,7 +41,7 @@ if (slot) {
   const changeOpen = document.getElementById("changePasswordOpen");
   const logout = document.getElementById("accountLogout");
   const loginLink = document.getElementById("accountLoginLink");
-  const isNested = /\\/(tentang|menu|kontak|pembayaran|akun)\\/?$/.test(window.location.pathname);
+  const isNested = /\/(tentang|menu|kontak|pembayaran|akun)\/?$/.test(window.location.pathname);
   loginLink.href = isNested ? "../akun/" : "akun/";
 
   const closePanel = () => {
