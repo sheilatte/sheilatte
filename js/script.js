@@ -21,11 +21,9 @@ const imagePath = (filename) => {
 // =====================
 const header = document.getElementById("header");
 
-if (header) {
-    window.addEventListener("scroll", () => {
-        header.classList.toggle("scrolled", window.scrollY > 60);
-    });
-}
+window.addEventListener("scroll", () => {
+    header.classList.toggle("scrolled", window.scrollY > 60);
+});
 
 // =====================
 // Mobile Menu
@@ -33,19 +31,17 @@ if (header) {
 const menuBtn = document.querySelector(".menu-btn");
 const navMenu = document.querySelector(".nav-menu");
 
-if (menuBtn && navMenu) {
-    menuBtn.addEventListener("click", () => {
-        navMenu.classList.toggle("active");
-        menuBtn.innerHTML = navMenu.classList.contains("active")
-            ? '<i class="fas fa-xmark"></i>'
-            : '<i class="fas fa-bars"></i>';
-    });
-}
+menuBtn.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+    menuBtn.innerHTML = navMenu.classList.contains("active")
+        ? '<i class="fas fa-xmark"></i>'
+        : '<i class="fas fa-bars"></i>';
+});
 
 document.querySelectorAll(".nav-menu a").forEach((link) => {
     link.addEventListener("click", () => {
-        if (navMenu) navMenu.classList.remove("active");
-        if (menuBtn) menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        navMenu.classList.remove("active");
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
     });
 });
 
