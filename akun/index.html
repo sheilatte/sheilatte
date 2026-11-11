@@ -102,7 +102,22 @@
 
 <body>
 
-  <main class="account-container">
+<header id="header">
+  <nav class="navbar">
+    <a href="../index.html" class="logo">☕ <span>Sheilatte</span></a>
+    <ul class="nav-menu">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../tentang/">Tentang</a></li>
+      <li><a href="../menu/">Menu</a></li>
+      <li><a href="../kontak/">Kontak</a></li>
+      <li id="accountMenuSlot"></li>
+    </ul>
+    <button class="menu-btn" type="button" aria-label="Buka menu"><i class="fas fa-bars"></i></button>
+  </nav>
+</header>
+
+
+  <main class="account-container" style="margin-top:120px;">
 
     <div id="accountSection">
 
@@ -539,5 +554,6 @@ forgotPasswordBtn.addEventListener("click", async () => {
 });
   </script>
 
+<script type="module" src="../js/account-menu.js"></script>
 </body>
 </html>
