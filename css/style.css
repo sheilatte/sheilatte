@@ -2667,3 +2667,52 @@ body.modal-open {
   margin-bottom: 12px;
   overflow-wrap: anywhere;
 }
+
+
+/* ================= ACCOUNT DROPDOWN ================= */
+#accountMenuSlot { display:flex; align-items:center; }
+.account-dropdown { position:relative; }
+.account-trigger {
+  display:flex; align-items:center; gap:9px; border:0; background:transparent;
+  color:var(--dark); font:500 15px 'Poppins',sans-serif; padding:10px 12px;
+  border-radius:12px; cursor:pointer;
+}
+.account-trigger:hover { background:#f3e7dd; color:var(--primary); }
+.account-chevron { font-size:11px; }
+.account-dropdown-panel {
+  position:absolute; top:calc(100% + 12px); right:0; width:205px; padding:8px;
+  background:#fff; border:1px solid #eadfd6; border-radius:14px;
+  box-shadow:0 14px 35px rgba(45,30,26,.16); z-index:3000;
+}
+.account-dropdown-panel[hidden] { display:none !important; }
+.account-dropdown-panel a, .account-dropdown-panel button {
+  display:flex; align-items:center; gap:11px; width:100%; padding:11px 12px;
+  border:0; border-radius:9px; background:transparent; color:var(--primary);
+  text-align:left; font:500 13px 'Poppins',sans-serif; cursor:pointer;
+}
+.account-dropdown-panel a:hover, .account-dropdown-panel button:hover { background:#fff4eb; }
+.account-dropdown-panel [hidden] { display:none !important; }
+.account-password-box {
+  position:fixed; inset:0; z-index:5000; display:grid; place-items:center;
+  padding:20px; background:rgba(31,22,19,.55);
+}
+.account-password-box form {
+  width:min(420px,100%); padding:26px; border-radius:18px; background:#fff;
+  box-shadow:0 20px 55px rgba(0,0,0,.22);
+}
+.account-password-box h3 { color:var(--primary); margin-bottom:8px; }
+.account-password-box p { color:#766a64; font-size:13px; margin:8px 0 14px; }
+.account-password-box input {
+  width:100%; padding:12px 14px; margin:7px 0; border:1px solid #dfd3ca;
+  border-radius:9px; font:14px 'Poppins',sans-serif;
+}
+.account-password-actions { display:flex; gap:10px; margin-top:12px; }
+.account-password-actions button {
+  flex:1; padding:11px; border:0; border-radius:9px; background:var(--primary);
+  color:#fff; cursor:pointer; font:500 13px 'Poppins',sans-serif;
+}
+.account-password-actions button:last-child { background:#eee5df; color:var(--primary); }
+@media(max-width:768px) {
+  #accountMenuSlot { justify-content:center; }
+  .account-dropdown-panel { right:50%; transform:translateX(50%); }
+}
