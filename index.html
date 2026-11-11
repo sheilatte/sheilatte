@@ -2,127 +2,77 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Tentang | Sheilatte</title>
 
-    <title>
-        Sheilatte | Brew Happiness Every Day
-    </title>
-
-
-    <!-- ================= GOOGLE FONT ================= -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
-
-    <!-- ================= FONT AWESOME ================= -->
-
+    <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../css/style.css">
 
-    <!-- ================= CSS ================= -->
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
-<link rel="icon" type="image/png" href="assets/images/sheilatte-logo.png">
-
+    <link rel="icon" type="image/png" href="../assets/images/sheilatte-logo.png">
+    
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
+<!-- ================= NAVBAR ================= -->
 
 <header id="header">
 
     <nav class="navbar">
 
-
-        <!-- LOGO -->
-
-       <a
-            href="index.html"
-            class="logo"
-        >
-            ☕
-            <span>Sheilatte</span>
+        <a href="../index.html" class="logo">
+            ☕ <span>Sheilatte</span>
         </a>
-
-        <!-- NAVIGATION -->
 
         <ul class="nav-menu">
 
             <li>
-                <a
-                    href="#home"
-                    class="active"
-                >
+                <a href="../">
                     Home
                 </a>
             </li>
 
-
             <li>
-                <a href="../sheilatte/tentang">
+                <a href="../tentang">
                     Tentang
                 </a>
             </li>
 
-
-            <!-- MENU SEKARANG HALAMAN TERPISAH -->
-
             <li>
-                <a href="../sheilatte/menu">
+                <a href="../menu">
                     Menu
                 </a>
             </li>
 
             <li>
-                <a href="../sheilatte/kontak">
+                <a href="../kontak">
                     Kontak
                 </a>
             </li>
             
-            <!-- Tombol Akun -->
 <li id="accountMenuSlot"></li>
 
         </ul>
 
-
-        <!-- MOBILE MENU BUTTON -->
-
         <div class="menu-btn">
-
             <i class="fas fa-bars"></i>
-
         </div>
 
     </nav>
@@ -130,134 +80,401 @@
 </header>
 
 
-
 <!-- =====================================================
-     HERO
+     ABOUT HERO
 ===================================================== -->
 
-<section
-    class="hero"
-    id="home"
->
-
-
-    <!-- HERO TEXT -->
-
-    <div class="hero-text">
-
-
-        <h1>
-
-            Nikmati Secangkir
-
-            <span>
-                Kopi Terbaik
-            </span>
-
-        </h1>
-
-
-        <p>
-
-            Dibuat dari biji kopi pilihan
-            dengan rasa yang lembut,
-            aroma yang kaya, dan pengalaman
-            minum kopi yang tak terlupakan.
-
-        </p>
-
-
-        <!-- HERO BUTTON -->
-
-        <div class="hero-button">
-
-
-            <!-- KE HALAMAN MENU -->
-
-            <a
-                href="menu/index.html"
-                class="btn"
-            >
-                Lihat Menu
-            </a>
-
-
-            <!-- KE SECTION ABOUT -->
-
-            <a
-                href="tentang/index.html"
-                class="btn-outline"
-            >
-                Tentang Kami
-            </a>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- HERO IMAGE -->
-
-    <div class="hero-image">
-
-        <img
-            src="assets/images/hero-coffee.webp"
-            alt="Secangkir kopi Sheilatte"
-        >
-
-    </div>
-
-</section>
-
-
-
-
-
-
-<!-- =====================================================
-     BEST SELLER
-===================================================== -->
-
-<section
-    class="menu"
-    id="menu"
->
+<section class="about about-hero" id="about">
 
     <div class="container">
 
-
         <div class="section-title">
 
+            <span class="about-label">
+                ABOUT SHEILATTE
+            </span>
+
             <h2>
-                Best Seller
+                Tentang Sheilatte
             </h2>
 
-
             <p>
-                Menu favorit pelanggan Sheilatte
+                Sebuah tempat untuk menikmati kopi,
+                berbagi cerita, dan menciptakan
+                momen sederhana yang berarti.
             </p>
 
         </div>
 
 
-        <!--
+        <div class="about-content">
 
-            Best Seller di Home.
+            <!-- IMAGE -->
 
-            Produk utama tetap bisa ditampilkan
-            menggunakan JavaScript.
+            <div class="about-image">
 
-        -->
+                <div class="about-image-decoration decoration-one"></div>
+                <div class="about-image-decoration decoration-two"></div>
+
+                <img
+                    src="../assets/images/about-image.webp"
+                    alt="Suasana Sheilatte"
+                >
+
+                <div class="about-image-badge">
+
+                    <span>☕</span>
+
+                    <div>
+                        <strong>Sheilatte</strong>
+                        <small>Brew Happiness</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEXT -->
+
+            <div class="about-text">
+
+                <span class="about-label">
+                    OUR STORY
+                </span>
+
+                <h3>
+                    Brew Happiness
+                    <br>
+                    <span>Every Day</span>
+                </h3>
+
+                <p>
+                    Sheilatte hadir dari sebuah keinginan sederhana:
+                    menciptakan tempat di mana setiap orang dapat
+                    menikmati secangkir minuman dengan rasa yang
+                    nyaman dan suasana yang menyenangkan.
+                </p>
+
+                <p>
+                    Bagi kami, kopi bukan sekadar minuman.
+                    Secangkir kopi dapat menjadi teman untuk memulai
+                    pagi, menemani pekerjaan, menjadi bagian dari
+                    waktu belajar, atau sekadar menemani percakapan
+                    bersama orang-orang tersayang.
+                </p>
+
+                <p>
+                    Karena itu, Sheilatte berusaha menghadirkan
+                    minuman yang dibuat dengan bahan berkualitas,
+                    racikan yang seimbang, dan perhatian pada setiap
+                    detail.
+                </p>
+
+                <p>
+                    Mulai dari kopi klasik seperti Americano dan
+                    Cappuccino hingga minuman signature yang creamy
+                    dan lembut, setiap menu dibuat untuk memberikan
+                    pengalaman yang berbeda.
+                </p>
+
+                <p class="about-highlight">
+
+                    <i class="fas fa-heart"></i>
+
+                    Satu cangkir, satu cerita,
+                    satu momen bahagia.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WHY SHEILATTE
+===================================================== -->
+
+<section class="why-sheilatte">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="about-label">
+                WHY SHEILATTE
+            </span>
+
+            <h2>
+                Mengapa Memilih Sheilatte?
+            </h2>
+
+            <p>
+                Kami ingin setiap kunjungan terasa
+                sederhana, nyaman, dan berkesan.
+            </p>
+
+        </div>
+
+
+        <div class="why-grid">
+
+
+            <!-- CARD 1 -->
+
+            <article class="why-card">
+
+                <div class="why-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+
+                <h3>
+                    Bahan Berkualitas
+                </h3>
+
+                <p>
+                    Kami menggunakan bahan pilihan untuk
+                    menghasilkan rasa minuman yang konsisten
+                    dan menyenangkan di setiap cangkir.
+                </p>
+
+            </article>
+
+
+            <!-- CARD 2 -->
+
+            <article class="why-card">
+
+                <div class="why-icon">
+                    <i class="fas fa-mug-hot"></i>
+                </div>
+
+                <h3>
+                    Racikan Sepenuh Hati
+                </h3>
+
+                <p>
+                    Setiap minuman dibuat dengan perhatian
+                    terhadap rasa, tekstur, aroma, dan
+                    pengalaman yang ingin kami berikan.
+                </p>
+
+            </article>
+
+
+            <!-- CARD 3 -->
+
+            <article class="why-card">
+
+                <div class="why-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+
+                <h3>
+                    Suasana Nyaman
+                </h3>
+
+                <p>
+                    Sheilatte ingin menjadi tempat yang
+                    nyaman untuk beristirahat, bekerja,
+                    belajar, maupun menghabiskan waktu
+                    bersama.
+                </p>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     VALUES
+===================================================== -->
+
+<section class="values">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="about-label">
+                OUR VALUES
+            </span>
+
+            <h2>
+                Nilai yang Kami Pegang
+            </h2>
+
+        </div>
+
+
+        <div class="values-grid">
+
+
+            <!-- VALUE 1 -->
+
+            <div class="value-item">
+
+                <span class="value-number">
+                    01
+                </span>
+
+                <div>
+
+                    <h3>
+                        Quality
+                    </h3>
+
+                    <p>
+                        Mengutamakan kualitas bahan dan
+                        rasa dalam setiap menu.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- VALUE 2 -->
+
+            <div class="value-item">
+
+                <span class="value-number">
+                    02
+                </span>
+
+                <div>
+
+                    <h3>
+                        Comfort
+                    </h3>
+
+                    <p>
+                        Menciptakan pengalaman yang
+                        nyaman dan menyenangkan.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- VALUE 3 -->
+
+            <div class="value-item">
+
+                <span class="value-number">
+                    03
+                </span>
+
+                <div>
+
+                    <h3>
+                        Happiness
+                    </h3>
+
+                    <p>
+                        Menghadirkan kebahagiaan melalui
+                        setiap minuman yang kami sajikan.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MENU ================= -->
+
+<section class="menu" id="menu">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>
+                Semua Menu
+            </h2>
+
+            <p>
+                Pilih minuman favoritmu dan temukan
+                rasa yang paling cocok untukmu.
+            </p>
+
+        </div>
+
+
+        <!-- MENU FILTER -->
+
+      <div
+    class="menu-filters"
+    aria-label="Filter menu"
+>
+
+    <button
+        class="filter-btn active"
+        type="button"
+        data-filter="Semua"
+    >
+        Semua
+    </button>
+
+    <button
+        class="filter-btn"
+        type="button"
+        data-filter="Kopi"
+    >
+        Kopi
+    </button>
+
+    <button
+        class="filter-btn"
+        type="button"
+        data-filter="Non-Kopi"
+    >
+        Non-Kopi
+    </button>
+
+    <button
+        class="filter-btn"
+        type="button"
+        data-filter="Tea"
+    >
+        Tea
+    </button>
+
+    <button
+        class="filter-btn"
+        type="button"
+        data-filter="Snack"
+    >
+        Snack
+    </button>
+          </div>
+
+
+        <!-- PRODUCT GRID -->
 
         <div
             class="menu-grid"
             id="productGrid"
             aria-live="polite"
-        >
-
-        </div>
-
+        ></div>
 
     </div>
 
@@ -266,44 +483,29 @@
 
 
 <!-- =====================================================
-     PROMO
+     CTA
 ===================================================== -->
 
-<section
-    class="promo"
-    id="promo"
->
+<section class="promo">
 
     <div class="promo-box">
 
-
         <h2>
-            Diskon 20%
+            Brew Happiness Every Day
         </h2>
 
-
         <p>
-
-            Nikmati promo spesial untuk
-            menu pilihan setiap akhir pekan.
-
+            Temukan minuman favoritmu dan nikmati
+            momen sederhana bersama Sheilatte.
         </p>
 
-
-        <!-- TOMBOL PROMO -->
-
-        <a
-            href="../sheilatte/kontak"
-            class="btn"
-        >
-            Hubungi Kami
+        <a href="../menu/index.html" class="btn">
+            Lihat Menu
         </a>
 
     </div>
 
 </section>
-
-
 
 
 <!-- =====================================================
@@ -314,55 +516,33 @@
 
     <div class="footer-content">
 
-
         <h2>
             Sheilatte
         </h2>
-
 
         <p>
             Brew Happiness Every Day
         </p>
 
-
-
-        <!-- SOCIAL MEDIA -->
-
         <div class="social">
 
-
-            <a
-                href="#"
-                aria-label="Instagram"
-            >
+            <a href="#" aria-label="Instagram">
                 <i class="fab fa-instagram"></i>
             </a>
 
-
-            <a
-                href="#"
-                aria-label="Facebook"
-            >
+            <a href="#" aria-label="Facebook">
                 <i class="fab fa-facebook"></i>
             </a>
 
-
-            <a
-                href="#"
-                aria-label="TikTok"
-            >
+            <a href="#" aria-label="TikTok">
                 <i class="fab fa-tiktok"></i>
             </a>
 
         </div>
 
-
-
         <p class="copyright">
-
             © 2026 Sheilatte.
             All Rights Reserved.
-
         </p>
 
     </div>
@@ -370,15 +550,13 @@
 </footer>
 
 
-
 <!-- =====================================================
      JAVASCRIPT
 ===================================================== -->
 
-<script src="js/script.js"></script>
+<script src="../js/script.js"></script>
 
-
-<script type="module" src="js/account-menu.js"></script>
+<script type="module" src="../js/account-menu.js"></script>
 </body>
 
 </html>
