@@ -2667,3 +2667,160 @@ body.modal-open {
   margin-bottom: 12px;
   overflow-wrap: anywhere;
 }
+
+
+
+/* =========================================
+   ACCOUNT DROPDOWN - SHEILATTE
+========================================= */
+
+/* Posisi tempat dropdown akun */
+.account-menu-slot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}
+
+/* Pembungkus dropdown */
+.account-dropdown {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Tombol utama Akun */
+.account-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 9px 14px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: transparent;
+    color: #49332d;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.account-trigger:hover {
+    background: #f3e5d9;
+    color: #bd8252;
+}
+
+/* Ikon akun */
+.account-trigger i {
+    font-size: 14px;
+}
+
+/* Ikon panah */
+.account-trigger .account-chevron {
+    font-size: 11px;
+    transition: transform 0.3s ease;
+}
+
+/* Panah berputar saat dropdown terbuka */
+.account-trigger[aria-expanded="true"] .account-chevron {
+    transform: rotate(180deg);
+}
+
+/* Kotak dropdown */
+.account-dropdown-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+
+    width: 210px;
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    background: #fffaf5;
+    border: 1px solid #ead9ca;
+    border-radius: 12px;
+
+    box-shadow: 0 8px 25px rgba(65, 43, 32, 0.15);
+
+    z-index: 9999;
+}
+
+/* Pastikan atribut hidden benar-benar menyembunyikan panel */
+.account-dropdown-panel[hidden] {
+    display: none !important;
+}
+
+/* Semua pilihan di dropdown */
+.account-dropdown-panel a,
+.account-dropdown-panel button {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    width: 100%;
+    padding: 11px 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+    color: #49332d;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Ukuran ikon pilihan */
+.account-dropdown-panel a i,
+.account-dropdown-panel button i {
+    width: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Efek saat pilihan disentuh */
+.account-dropdown-panel a:hover,
+.account-dropdown-panel button:hover {
+    background: #f3e5d9;
+    color: #bd8252;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 768px) {
+    .account-menu-slot {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .account-dropdown {
+        width: 100%;
+    }
+
+    .account-trigger {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .account-dropdown-panel {
+        position: static;
+        width: 100%;
+        margin-top: 5px;
+        box-shadow: none;
+    }
+}
+
