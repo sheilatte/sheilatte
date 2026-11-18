@@ -2759,6 +2759,11 @@ body.modal-open {
     display: none !important;
 }
 
+/* Sembunyikan pilihan yang tidak sesuai status login */
+.account-dropdown-panel [hidden] {
+    display: none !important;
+}
+
 /* Semua pilihan di dropdown */
 .account-dropdown-panel a,
 .account-dropdown-panel button {
@@ -2821,6 +2826,79 @@ body.modal-open {
         width: 100%;
         margin-top: 5px;
         box-shadow: none;
+    }
+}
+
+
+/* =========================================
+   MERAPIKAN POSISI NAVBAR DAN TOMBOL AKUN
+========================================= */
+
+.navbar {
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-menu > li {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.account-menu-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    align-self: center;
+}
+
+.account-dropdown {
+    display: flex;
+    align-items: center;
+}
+
+.account-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 9px 0 9px 2px;
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Menjaga dropdown tetap di bawah tombol */
+.account-dropdown-panel {
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 9999;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .account-menu-slot {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .account-trigger {
+        justify-content: flex-start;
+        padding: 9px 14px;
     }
 }
 
