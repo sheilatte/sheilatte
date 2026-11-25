@@ -964,7 +964,7 @@ document.getElementById("checkoutButton").addEventListener("click", () => {
 
     if (!cartReady || cart.length === 0) return;
 
-    window.location.href = "../pembayaran/";
+    window.location.href = "../sheilatte/pembayaran/";
 });
 
 // =====================
